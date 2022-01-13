@@ -67,16 +67,21 @@ export default {
           title: 'Inspire',
           to: '/inspire'
         },
-        /*{
+        {
           icon: 'mdi-minus-thick',
           title: 'TEST',
           to: '/sub/test'
         },
         {
+          icon: 'mdi-minus-thick',
+          title: 'TEST2',
+          to: '/sub/test2'
+        },
+        {
           icon: 'mdi-plus-thick',
           title: 'Add',
           to: '/sub/add'
-        },*/
+        },
         {
           icon: 'mdi-account',
           title: 'USER',

@@ -11,7 +11,7 @@
                 
                 <v-checkbox label="Do you agree term of service?"/>
 
-                <v-btn> Register </v-btn>
+                <v-btn to="/login/login"> Register </v-btn>
                 <v-btn> back </v-btn>
                 <br/>
                 <br/>    

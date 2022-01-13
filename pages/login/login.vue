@@ -8,7 +8,7 @@
                 <v-text-field label="password" />
                 <v-select :items="items" label="Role"></v-select>
                 
-                <v-btn> Login </v-btn>
+                <v-btn to="/user/user_main" > Login </v-btn>
                 <v-btn> Back </v-btn>
                 <br/>
                 <br/>    
