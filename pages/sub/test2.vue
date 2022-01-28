@@ -1,10 +1,51 @@
 <template>
-  <v-row>
-    <h1>......</h1>
-  </v-row>
+  <editor-content :editor="editor" />
 </template>
 
 <script>
+
+import { Editor, EditorContent, EditorMenuBar, EditorMenuBubble, EditorFloatingMenu } from 'tiptap';
+export default {
+  components: {
+    EditorContent,
+    editorProps: {},
+    editable: true,
+    autoFocus: null,
+    extensions: [],
+    //content: '',
+    topNode: 'doc',
+    emptyDocument: {
+      type: 'doc',
+      content: [{
+        type: 'paragraph',
+      }],
+    },
+    useBuiltInExtensions: true,
+    disableInputRules: false,
+    disablePasteRules: false,
+    dropCursor: {},
+    parseOptions: {},
+    injectCSS: true,
+    onInit: () => {},
+    onTransaction: () => {},
+    onUpdate: () => {},
+    onFocus: () => {},
+    onBlur: () => {},
+    onPaste: () => {},
+    onDrop: () => {},
+  },
+  data() {
+    return {
+      editor: null,
+    }
+  },
+  mounted() {
+    this.editor = new Editor({
+      content: '<p>Default Content Here</p>',
+    })
+  }
+}
+
 /*const { MongoClient } = require('mongodb');
 
 const uri = "mongodb+srv://kiartichai:94IHyNUlUXII6MFt@cluster0.3vhe9.mongodb.net/test?authSource=admin&replicaSet=atlas-k1km9w-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true"

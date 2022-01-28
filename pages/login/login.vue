@@ -22,7 +22,13 @@
 </template>
 
 <script>
+//import mongo from "api/FindDoc";
 export default {
+
+    created(){
+
+    },
+
     data() {
         return {
             items:[
