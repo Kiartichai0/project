@@ -15,10 +15,12 @@ client.close();*/
 //export default client;
 
 client.connect( async (err) => {
-  const collection = await client.db("mydb_1").collection("users");
-  const data = await collection.find();
+  const collection = await client.db("mydb_1").collection("test_user");
+  const data = await collection.findOne();
   //console.log(data);
-  await data.forEach(console.dir);
+  //await data.forEach(console.log);
+  await console.log(data.username);
+  //await data.forEach(info => console.dir(info.username) );
 
   //await cursor.forEach(console.dir);
   // perform actions on the collection object

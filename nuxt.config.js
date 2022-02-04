@@ -22,9 +22,10 @@ export default {
     ]
   },
 
-  /*serverMiddleware: [
-    { path:'/api' , handler:'~/api/index.js' },
-  ],*/
+  serverMiddleware: [
+    //{ path:'/api' , handler:'~/api/auth.js' },
+    '~/api/auth.js',
+  ],
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
@@ -33,7 +34,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     //'~/plugins/api-client.js',
-    '~/plugins/database.js'
+    //'~/plugins/database.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -49,12 +50,27 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'http://localhost:12345/api',
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'login', method: 'post', propertyName: 'data.token' },
+          user: { url: 'me', method: 'get', propertyName: 'data.user' },
+          logout: false
+        }
+      }
+    },
+    redirect: {
+      login: '/sub/login'
+    }
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
