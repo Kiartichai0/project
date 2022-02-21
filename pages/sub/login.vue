@@ -12,9 +12,6 @@
           <v-btn > Back </v-btn>
           <br />
           <br />
-          <router-link to="/login/register">
-            <v-text> Register? </v-text>
-          </router-link>
         </v-form>
       </center>
     </v-card>

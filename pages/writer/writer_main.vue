@@ -1,10 +1,10 @@
 <template>
     <div>
         <v-row>
-            <v-col class="col-4" v-for="i in 10" :key="i">
+            <v-col class="col-4" v-for="i in subject" :key="i._id">
                 <v-card>
                     <router-link to="/writer/writer_topic">
-                        <v-card-text> subject {{i}} </v-card-text>
+                        <v-card-text> {{i.title}} </v-card-text>
                     </router-link>
                 </v-card>
             </v-col>
@@ -18,3 +18,24 @@
         </v-row>
     </div>
 </template>
+
+<script>
+export default {
+    async asyncData({ $axios }) {
+      const subject = await $axios.$get('/subject');
+      return { subject };
+    },
+  data() {
+    return {
+      user: this.$auth.user,
+      loggedIn: this.$auth.loggedIn
+    };
+  },
+  methods: {
+    async logout() {
+      await this.$auth.logout();
+      this.$router.push('/login/login');
+    }
+  }
+};
+</script>

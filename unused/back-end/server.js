@@ -29,6 +29,16 @@ router.get('/me', (req, res) => {
   });
 });
 
+app.get('/users', async(req, res) => {
+  const id = parseInt(req.params.id);
+  const client = new MongoClient(uri);
+  await client.connect();
+  const users = await client.db('mydb_2').collection('users').find({}).toArray();
+  await res.send(users);
+  await client.close();
+  //res.status(200).send(users);
+})
+
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
 

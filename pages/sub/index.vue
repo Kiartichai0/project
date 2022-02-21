@@ -2,12 +2,14 @@
   <div class="container">
       <div v-if="loggedIn">
         <h1>Hello, {{ user.email }}</h1>
+        <!--h1>{{subject.title}}</h1-->
         <button  class="button--grey" @click="logout">Logout</button>
       </div>
 
       <div v-else>
         <nuxt-link to="/sub/login" class="button--grey">Login</nuxt-link>
       </div>
+
     </div>
 </template>
 
@@ -16,13 +18,14 @@ export default {
   data() {
     return {
       user: this.$auth.user,
+      subject: this.$auth.subject,
       loggedIn: this.$auth.loggedIn
     };
   },
   methods: {
     async logout() {
       await this.$auth.logout();
-      this.$router.push('/sub/login');
+      this.$router.push('/login/login');
     }
   }
 };
