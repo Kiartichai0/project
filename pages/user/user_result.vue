@@ -9,7 +9,7 @@
         </v-row>
         <v-card-text> Summary : 9/10 </v-card-text>
         <v-card-actions>
-            <v-btn to="/user/user_topic"> back </v-btn>
+            <v-btn to="/user/user_main"> back </v-btn>
         </v-card-actions>
     </v-card>
 </template>

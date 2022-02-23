@@ -4,12 +4,40 @@
       <v-card-title class="justify-center ma-5"> Register </v-card-title>
       <center>
         <v-form class="col-10 justify-center" @submit="register">
-          <v-text-field label="username" v-model="username" />
-          <v-text-field type="password" label="password" v-model="password" />
-          <v-text-field type="password" label="password again" />
-          <v-select :items="items" label="Role" v-model="role"></v-select>
+          <v-text-field
+            label="username"
+            :rules="fillRules"
+            v-model="username"
+            required
+          />
+          <v-text-field
+            type="password"
+            :rules="fillRules"
+            label="password"
+            v-model="password"
+            required
+          />
+          <v-text-field
+            type="password"
+            :rules="fillRules"
+            label="password again"
+            v-model="password2"
+            required
+          />
+          <v-select
+            :items="items"
+            label="Role"
+            v-model="role"
+            :rules="[(v) => !!v || 'Role is required']"
+            required
+          ></v-select>
 
-          <v-checkbox label="Do you agree term of service?" />
+          <v-checkbox
+            label="Do you agree term of service?"
+            :rules="[(v) => !!v || 'You must agree to continue!']"
+            v-model="agree"
+            required
+          />
 
           <v-btn type="submit"> Register </v-btn>
           <v-btn to="/login/login"> back </v-btn>
@@ -30,14 +58,17 @@ export default {
     return {
       items: ["User", "Writer"],
       username: "",
+      fillRules: [(v) => !!v || "Can not be empty."],
       password: "",
+      password2: "",
       role: "",
+      agree: false,
     };
   },
   methods: {
     async register(e) {
       e.preventDefault();
-      await console.log(this.role);
+      //await console.log(this.role);
 
       const payload = {
         username: this.username,
@@ -45,17 +76,26 @@ export default {
         role: this.role,
       };
 
-      await this.$axios.$post('/register',payload);
+      if (
+        this.username === "" ||
+        this.password === "" ||
+        this.password2 === "" ||
+        this.role == "" ||
+        this.password !== this.password2
+      ) {
+        alert("Please fill information correctly.");
+      } else {
+        await this.$axios.$post("/register", payload);
 
-      try {
-          
-        await this.$auth.loginWith("local", {
-          data: payload,
-        });
+        /*try {
+          await this.$auth.loginWith("local", {
+            data: payload,
+          });
 
-        this.$router.push("/user/user_main");
-      } catch (e) {
-        this.$router.push("/login/register");
+          this.$router.push("/user/user_main");
+        } catch (e) {
+          this.$router.push("/login/register");
+        }*/
       }
     },
   },

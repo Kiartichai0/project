@@ -13,10 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 const user = {
-  id: 1,
-  username: 'john',
-  email: 'john@doe.com',
-  name: 'John Doe'
+  username: '',
 };
 
 
@@ -40,8 +37,6 @@ const subject = {
 })
 client.close();*/
 
-
-
 router.get('/me', (req, res) => {
   return res.json({
     data: {
@@ -50,7 +45,7 @@ router.get('/me', (req, res) => {
   });
 });
 
-////READ USERS -----> UNUSED DELETE LATER////
+/*///READ USERS -----> UNUSED DELETE LATER////
 app.get('/users', async (req, res) => {
   const id = parseInt(req.params.id);
   const client = new MongoClient(uri);
@@ -73,6 +68,35 @@ app.get('/users/:id', async (req, res) => {
   });
 })
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**show user*/
+router.get('/users', (req, res) => {
+  // query db.
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("users");
+    const data = await collection.find({}).toArray();
+    //await data.forEach(console.dir);
+    //console.dir(data);
+    return res.send(data);
+  })
+  //client.close();
+});
+
+//////DELETE USER//////
+app.delete('/users/delete', async (req, res) => {
+  const id = req.body.id;
+  await console.log(id);
+
+  client.connect(async (err) => {
+    await client.db('mydb_2').collection('users').deleteOne({ 'username': id});
+  })
+
+  res.status(200).send({
+    "status": "ok",
+    "message": "User with ID = "+id+" is deleted"
+  });
+
+})
+
 
 
 /*-----------show subject-----------------*/
@@ -81,6 +105,59 @@ router.get('/subject', (req, res) => {
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("subject");
     const data = await collection.find({}).toArray();
+    //console.dir(data);
+    return res.send(data);
+  })
+  //client.close();
+});
+
+/*-----------add subject-----------------*/
+
+router.post('/addsubject', (req, res) => {
+  const { subject } = req.body;
+
+  client.connect(async (err) => {
+    await client.db('mydb_2').collection('subject').insertOne(subject);
+  })
+  //client.close();
+});
+
+/*-----------delete subject-----------------*/
+
+app.delete('/subject/delete', async (req, res) => {
+  const id = req.body.id;
+  await console.log(id);
+
+  client.connect(async (err) => {
+    await client.db('mydb_2').collection('subject').deleteOne({ 'title': id});
+  })
+
+  res.status(200).send({
+    "status": "ok",
+    "message": "User with ID = "+id+" is deleted"
+  });
+
+})
+
+
+router.post('/addtopic', (req, res) => {
+  const { subject } = req.body;
+  const rand = Math.random();
+
+  client.connect(async (err) => {
+    await client.db('mydb_2').collection('subject').updateOne({ name: "Deli Llama" },{ $set: { content: {x:""} }},{ upsert: true });
+  })
+  //client.close();
+});
+
+
+
+router.get('/subject/:id', (req, res) => {
+  // query db.
+  client.connect(async (err) => {
+    const id = req.params.id;
+    const collection = await client.db("mydb_2").collection("subject");
+    const data = await collection.find({ "_id": id }).toArray();
     //await data.forEach(console.dir);
     console.dir(data);
     return res.send(data);
@@ -96,19 +173,34 @@ router.post('/login', (req, res) => {
   // query db.
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("users");
-    const data = await collection.find();
-    await data.forEach(info => {
-      if (username === info.username && password === info.password && role === info.role) {
+    const data = await collection.find({}).toArray();
+    await console.log(data);
+    await data.forEach((info, i, data) => {
+      if (username === info.username && password === info.password && role === info.role && i !== data.length - 1) {
         user.username = username;
         return res.json({
           data: {
-            username,
+            user,
             token: 'THIS_IS_TOKEN'
           }
         });
       }
+      /*else if (username === info.username && password === info.password && role === info.role) {
+        user.username = username;
+        return res.json({
+          data: {
+            user,
+            token: 'THIS_IS_TOKEN'
+          }
+        });
+      }
+      else {
+        return res.status(401).json({
+          message: 'Invalid Password'
+        });
+      }*/
     }
-    );   
+    );
   })
   //client.close();
 });
@@ -123,7 +215,7 @@ router.post('/register', (req, res) => {
       username: username,
       password: password,
       role: role,
-    }); 
+    });
   })
   //client.close();
 });

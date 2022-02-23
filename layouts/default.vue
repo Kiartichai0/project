@@ -57,7 +57,7 @@ export default {
       drawer: false,
       fixed: false,
       items: [
-        {
+        /*{
           icon: 'mdi-apps',
           title: 'Welcome',
           to: '/'
@@ -86,7 +86,7 @@ export default {
           icon: 'mdi-plus-thick',
           title: 'Add',
           to: '/sub/add'
-        },
+        },*/
         {
           icon: 'mdi-account',
           title: 'USER',
@@ -106,6 +106,11 @@ export default {
           icon: 'mdi-plus-thick',
           title: 'Login',
           to: '/login/login'
+        },
+        {
+          icon: 'mdi-plus-thick',
+          title: 'Admin',
+          to: '/admin/login'
         },
       ],
       miniVariant: false,

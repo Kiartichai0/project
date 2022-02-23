@@ -71,7 +71,7 @@ export default {
       }
     },
     redirect: {
-      login: '/sub/login'
+      login: '/login/login'
     }
   },
 

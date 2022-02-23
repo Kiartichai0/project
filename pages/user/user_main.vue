@@ -7,7 +7,7 @@
             <v-col class="col-4" v-for="i in subject" :key="i._id">
                 <v-card>
                     <!--router-link to="/user/user_topic"-->
-                    <router-link :to="{ path: '/user/user_topic', query: { subject:i.content,title:i.title,id:i._id} }">
+                    <router-link :to="{ path: '/user/user_topic', query: { subject:i.content ,title:i.title ,id:i._id} }">
                         <v-card-text>{{i.title}} </v-card-text>
                     </router-link>
                 </v-card>

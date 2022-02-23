@@ -14,6 +14,6 @@
         </v-card>
         </v-row>
         <v-btn class=" ma-5 primary" to="/user/user_result"> submit </v-btn>
-        <v-btn class=" ma-5 " to="/user/user_topic"> back </v-btn>
+        <v-btn class=" ma-5 " to="/user/user_main"> back </v-btn>
     </div>
 </template>
