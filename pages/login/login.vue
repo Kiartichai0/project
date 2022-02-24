@@ -58,7 +58,7 @@ export default {
 
         this.$router.push("/user/user_main");
       } catch (e) {
-        alert(e);
+        alert( "wrong username or password or role");
         this.error = e;
         //this.$router.push("/login/login");
       }

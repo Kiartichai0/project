@@ -52,7 +52,7 @@ export default {
         });
         this.$router.push("/admin/admin");
       } catch (e) {
-        alert(e);
+        alert("wrong username or password");
         this.error = e;
         //this.$router.push("/login/login");
       }

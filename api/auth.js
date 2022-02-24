@@ -14,6 +14,7 @@ app.use(express.json());
 
 const user = {
   username: '',
+  role:'',
 };
 
 
@@ -175,17 +176,18 @@ router.post('/login', (req, res) => {
     const collection = await client.db("mydb_2").collection("users");
     const data = await collection.find({}).toArray();
     await console.log(data);
-    await data.forEach((info, i, data) => {
-      if (username === info.username && password === info.password && role === info.role && i !== data.length - 1) {
-        user.username = username;
-        return res.json({
-          data: {
-            user,
-            token: 'THIS_IS_TOKEN'
-          }
-        });
-      }
-      /*else if (username === info.username && password === info.password && role === info.role) {
+    await data.forEach((info, i, arr) => {
+      if(i != (arr.length - 1)){
+        if (username === info.username && password === info.password && role === info.role ) {
+          user.username = username;
+          return res.json({
+            data: {
+              user,
+              token: 'THIS_IS_TOKEN'
+            }
+          });
+        }
+      }else if (username === info.username && password === info.password && role === info.role) {
         user.username = username;
         return res.json({
           data: {
@@ -198,7 +200,7 @@ router.post('/login', (req, res) => {
         return res.status(401).json({
           message: 'Invalid Password'
         });
-      }*/
+      }
     }
     );
   })
