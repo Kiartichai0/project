@@ -222,6 +222,27 @@ router.post('/register', (req, res) => {
   //client.close();
 });
 
+router.post('/adddiscuss', (req, res) => {
+  const { discuss } = req.body;
+
+  client.connect(async (err) => {
+    await client.db('mydb_2').collection('discuss').insertOne(discuss);
+  })
+  //client.close();
+});
+
+/*-----------show discussion-----------------*/
+router.get('/discuss', (req, res) => {
+  // query db.
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("discuss");
+    const data = await collection.find({}).toArray();
+    //console.dir(data);
+    return res.send(data);
+  })
+  //client.close();
+});
+
 
 app.use(router)
 

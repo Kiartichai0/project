@@ -5,7 +5,7 @@
         offset-md="3" class="col-12 justify-center" v-for="i in subject" :key="i._id">
             <v-card>
                 <!--router-link to="/user/user_content"-->
-                <router-link :to="{ path: '/user/user_content', query: { content:i.content , subject:subject, title:title, img:i.img, t:i.title} }">
+                <router-link :to="{ path: '/user/user_content', query: { content:i.content , subject:subject, title:title, img:i.img, t:i.title,info:i.info} }">
                     <v-card-title > {{i.title}} </v-card-title>
                 </router-link>                
                 <v-card-subtitle> This is {{i.title}} </v-card-subtitle>

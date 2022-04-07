@@ -18,6 +18,7 @@
             </v-card-text-->
             <center><v-img :src = "img" height="400" width="600" align="center" ></v-img></center>
             <v-card-text> {{content}} </v-card-text>
+            <div v-html="info"/>
 
             <v-card-actions class=" justify-space-between ">
 
@@ -41,6 +42,7 @@ export default {
         content: this.$route.query.content,
         title: this.$route.query.title,
         img: this.$route.query.img,
+        info: this.$route.query.info,
         };
     },
 }

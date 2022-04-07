@@ -8,7 +8,12 @@
           <v-text-field label="Chapter 1 Title" v-model="chapter" />
           <v-text-field label="Chapter 1 Picture link" v-model="img" />
           <v-textarea label="Chapter 1 Description" v-model="description" />
-          <v-textarea label="Chapter 1 Contents" v-model="content" />
+          <h1 class="display-1">
+            Chapter 1 Contents
+          </h1>
+          <Editor v-model="info" />
+
+          <div v-html="info"></div>
 
           <v-btn type="submit"> Save </v-btn>
           <v-btn to="/writer/writer_main"> Back </v-btn>
@@ -19,9 +24,16 @@
 </template>
 
 <script>
+import Editor from "../../components/Editor";
+
 export default {
+  components: {
+    Editor,
+  },
+
   data() {
     return {
+      info: "",
       title: "",
       chapter: "",
       description: "",
@@ -43,13 +55,13 @@ export default {
               description: this.description,
               content: this.content,
               img: this.img,
+              info: this.info,
             },
           },
         },
       };
       await this.$axios.$post("/addsubject", payload);
       await this.$router.push("/writer/writer_main");
-
     },
   },
 };

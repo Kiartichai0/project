@@ -1,42 +1,20 @@
 <template>
-  <div>
-    <!--ul v-if="posts && posts.length">
-      <li v-for="post of posts">
-        <p><strong>{{post.title}}</strong></p>
-        <p>{{post.body}}</p>
-      </li>
-    </ul>
+  <section>
+    <h1 class="display-1">Rich-Text editor integration By Anamol Soman</h1>
+    <Editor v-model="info" />
 
-    <ul v-if="errors && errors.length">
-      <li v-for="error of errors">
-        {{error.message}}
-      </li>
-    </ul-->
-    <h1>{{posts}}</h1>
-  </div>
+    <div v-html="info"></div>
+  
+  </section>
 </template>
-
 <script>
-import axios from 'axios';
-
+import Editor from "../../components/Editor";
 export default {
-  data() {
-    return {
-      posts: [],
-      errors: []
-    }
+  components: {
+    Editor,
   },
-
-  // Fetches posts when the component is created.
-  created() {
-    axios.get(`localhost:3000/api/users`)
-    .then(response => {
-      // JSON responses are automatically parsed.
-      this.posts = response.data;
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
-  }
-}
+  data: () => ({
+    info: "My Default Content",
+  }),
+};
 </script>
