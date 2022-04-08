@@ -9,7 +9,7 @@
           <router-link
             :to="{
               path: '/discuss/discuss_room',
-              query: { title: i.title, id: i._id },
+              query: { title: i.title, id: i._id,discuss:i },
             }"
           >
             <v-card-text>{{ i.title }}</v-card-text>

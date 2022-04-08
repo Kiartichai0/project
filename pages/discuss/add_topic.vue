@@ -2,17 +2,16 @@
   <div>
     <v-card>
       <v-card-title class="justify-center ma-5"> ADD Topic </v-card-title>
-      <center>
+
         <v-form class="col-10" @submit="adddis">
+          <h2>Title</h2>
+          <v-text-field label="Question" v-model="title" />
+          <h2>description</h2>
           <Editor v-model="info" />
-
           <br/>
-
-
           <v-btn type="submit"> Save </v-btn>
-          <v-btn to="/writer/writer_main"> Back </v-btn>
+          <v-btn to="/discuss/discuss_main"> Back </v-btn>
         </v-form>
-      </center>
     </v-card>
   </div>
 </template>
@@ -27,6 +26,7 @@ export default {
 
   data() {
     return {
+      title: "",
       info: "",
     };
   },
@@ -37,7 +37,8 @@ export default {
 
       const payload = {
         discuss: {
-          title: this.info,
+          title: this.title,
+          description: this.info,
           comments: {
           },
         },

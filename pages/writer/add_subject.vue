@@ -6,7 +6,6 @@
         <v-form class="col-10" @submit="addsubject">
           <v-text-field label="Subject name" v-model="title" />
           <v-text-field label="Chapter 1 Title" v-model="chapter" />
-          <v-text-field label="Chapter 1 Picture link" v-model="img" />
           <v-textarea label="Chapter 1 Description" v-model="description" />
           <h1 class="display-1">
             Chapter 1 Contents

@@ -16,6 +16,7 @@ import {
   Bold,
   Italic,
   Strike,
+  Image,
   Underline,
   Code,
   Paragraph,
@@ -33,9 +34,7 @@ export default {
   props: {
     value: {
       type: String,
-      default: `
-<h1>Yay Headlines!</h1>
-<p>All these <strong>cool tags</strong> are working now.</p>`,
+      default: `<h1></h1>`,
     },
   },
   data: () => ({
@@ -45,6 +44,7 @@ export default {
       Link,
       Underline,
       Strike,
+      Image,
       Italic,
       ListItem,
       BulletList,
