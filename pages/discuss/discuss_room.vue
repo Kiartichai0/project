@@ -9,7 +9,7 @@
         <v-list-item-content>
 
           <v-list-item-subtitle
-            >Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle
+            >{{info}}</v-list-item-subtitle
           >
         </v-list-item-content>
 
@@ -40,6 +40,20 @@ export default {
       discuss: this.$route.query.discuss,
       info: "",
     };
+  },
+   methods: {
+    async adddis(e) {
+      e.preventDefault();
+      //await console.log(this.role);
+
+      const payload = {
+        id:this.id,
+        comment:this.info,
+        allcomment:this.info
+      };
+      await this.$axios.$post("/addcomments", payload);
+      //await this.$router.push("/writer/writer_main");
+    },
   },
 };
 </script>

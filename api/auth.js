@@ -243,6 +243,42 @@ router.get('/discuss', (req, res) => {
   //client.close();
 });
 
+router.get('/showcomments', (req, res) => {
+  // query db.
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("discuss");
+    const data = await collection.find({}).toArray();
+    //console.dir(data);
+    return res.send(data);
+  })
+  //client.close();
+});
+
+router.post('/addcomments', (req, res) => {
+
+  const { id, comment, allcomment } = req.body;
+  // query db.
+  client.connect(async (err) => {
+    //const collection = await client.db("mydb_2").collection("users");
+    await client.db('mydb_2').collection('discuss').updateOne( {_id:id},{$set:{
+      comments: {allcomment,comment}
+    }});
+  })
+  //client.close();
+});
+
+/*-----------show subject-----------------*/
+router.get('/quiz', (req, res) => {
+  // query db.
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("quiz");
+    const data = await collection.find({}).toArray();
+    //console.dir(data);
+    return res.send(data);
+  })
+  //client.close();
+});
+
 
 app.use(router)
 

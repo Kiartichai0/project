@@ -83,6 +83,11 @@ export default {
           to: '/sub/test3'
         },
         {
+          icon: 'mdi-minus-thick',
+          title: 'TEST4',
+          to: '/sub/test4'
+        },
+        {
           icon: 'mdi-plus-thick',
           title: 'Add',
           to: '/sub/add'
