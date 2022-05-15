@@ -18,13 +18,13 @@
         </router-link>
 
         <v-card-text>
-          this subject quiz have {{quiz[0].quiz.length}} questions
+          this subject quiz have {{quiz[0].quiz.length}} questions <br/>
+          this last attemp got {{quiz[0].score}} points
         </v-card-text>
       </v-card>
     </v-row>
     <v-row class="col-12 justify-center"
-      ><v-btn to="/user/user_main">back</v-btn></v-row
-    >
+      ><v-btn to="/user/user_main">back</v-btn></v-row>
   </div>
 </template>
 <script>

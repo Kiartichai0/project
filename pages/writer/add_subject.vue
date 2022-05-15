@@ -1,5 +1,6 @@
 <template>
   <div >
+    <h1></h1>
     <v-card >
       <v-card-title class="justify-center ma-5"> ADD Subject </v-card-title>
         <v-form class="col-10" @submit="addsubject">

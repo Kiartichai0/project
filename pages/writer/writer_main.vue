@@ -13,14 +13,14 @@
     <v-row>
       <v-col class="col-4" v-for="i in subject" :key="i._id">
         <v-card>
-          <router-link
+          <nuxt-link
             :to="{
               path: '/writer/writer_topic',
-              query: { subject: i.content, title: i.title, id: i._id },
+              query: { id: i.id },
             }"
           >
             <v-card-text> {{ i.title }} </v-card-text>
-          </router-link>
+          </nuxt-link>
         </v-card>
       </v-col>
       <v-col class="col-4">

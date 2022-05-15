@@ -33,7 +33,7 @@
     </v-col>
   </div>
   <div v-else>
-  <h1>Admininstrator only!!!</h1>
+  <h1>Administrator only!!!</h1>
   <v-btn to="/admin/login">Login</v-btn>
   </div>
 </template>

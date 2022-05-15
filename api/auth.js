@@ -13,19 +13,10 @@ app.use(cors());
 app.use(express.json());
 
 const user = {
-  username: '',
-  role: '',
+  username: 'a',
+  role: 'a',
 };
 
-
-/*client.connect(async (err) => {
-  const collection = await client.db("mydb_2").collection("subject");
-  const data = await collection.findOne();
-  //await data.forEach(console.dir);
-  console.dir(data);
-  this.subject = data;
-})
-client.close();*/
 
 router.get('/me', (req, res) => {
   return res.json({
@@ -149,7 +140,7 @@ router.get('/subject/:id', (req, res) => {
     const collection = await client.db("mydb_2").collection("subject");
     const data = await collection.find({ 'id': id }).toArray();
     //await data.forEach(console.dir);
-    console.dir(data);
+    //console.dir(data);
     return res.send(data);
   })
   //client.close();
@@ -276,22 +267,16 @@ router.get('/quiz/:id', (req, res) => {
 });
 
 /*-----------save quiz score-----------------*/
-/*router.put('/score', (req, res) => {
+router.post('/score', (req, res) => {
   // query db.
-  const s = req.body;
+  const { data }  = req.body;
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("quiz");
-    const data = await collection.updateOne(
-      { id:s.id },
-      {$set: {
-          'score':s.score 
-        }
-      },{upsert:true});
+    collection.updateOne({ id: data.id },{$set: { score: data.score }});
     //console.dir(data);
-    return res.send(data);
   })
   //client.close();
-});*/
+});
 
 app.use(router)
 

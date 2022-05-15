@@ -25,10 +25,7 @@
       </v-row>
       <v-btn
         class="ma-5"
-        :to="{
-          path: '/user/user_topic',
-          query: { id: this.id },
-        }"
+        @click="back()"
       >
         back
       </v-btn>
@@ -72,17 +69,17 @@ export default {
       this.current++;
       console.log(a, b);
     },
-    /*async back() {
+    async back() {
       const payload = {
-        subject: {
+        data: {
           id: this.$route.query.id,
-          score: this.title,
+          score: this.score,
         },
       };
 
-      await this.$axios.$put("/score", payload);
+      await this.$axios.$post("/score", payload);
       await this.$router.push(`/user/user_topic?id=${this.id}`);
-    },*/
+    },
   },
 };
 </script>

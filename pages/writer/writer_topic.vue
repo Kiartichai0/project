@@ -1,9 +1,11 @@
 <template>
   <div>
-    <v-row class="justify-center" v-for="i in subject" :key="i._id">
+    <h1>{{sub}}</h1>
+    <h1>{{quiz}}</h1>
+    <v-row class="justify-center" v-for="i in sub[0].chapters" :key="i.id">
       <v-card class="ma-5" width="100%">
         <v-card-title> {{ i.title }} </v-card-title>
-        <div class="ma-5 justify-center" v-html="i.info"/>
+        <div class="ma-5 justify-center" v-html="i.content"/>
         <v-card-actions>
           <v-btn to="/writer/edit_topic"> EDIT </v-btn>
           <v-btn> DELETE </v-btn>
@@ -18,9 +20,12 @@
         </router-link>
       </v-card>
       <v-card class="mr-5">
-        <router-link to="/writer/add_topic">
+        <nuxt-link :to="{
+              path: '/writer/add_topic',
+              query: { id: id },
+            }" >
           <v-card-title> ADD TOPIC </v-card-title>
-        </router-link>
+        </nuxt-link>
       </v-card>
 
       <v-card>
@@ -34,16 +39,15 @@
 
 <script>
 export default {
-  /*async asyncData({ $axios }) {
-      const subject = await $axios.$get('/subject/62051cc5a5fed0bf9e5ed4a7');
-      return { subject };
-    },*/
+    async asyncData({ $axios, query }) {
+      const sub = await $axios.$get(`/subject/${query.id}`);
+      const quiz = await $axios.$get(`/quiz/${query.id}`);
+      return { sub,quiz };
+    },
   data() {
     return {
       user: this.$auth.user,
-      subject: this.$route.query.subject,
       id: this.$route.query.id,
-      title: this.$route.query.title,
       loggedIn: this.$auth.loggedIn,
     };
   },

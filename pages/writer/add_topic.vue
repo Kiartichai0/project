@@ -1,13 +1,12 @@
 <template>
   <div>
+    <h1>{{id}}</h1>
     <v-card>
       <v-card-title class="justify-center ma-5"> ADD Topic </v-card-title>
       <center>
         <v-form class="col-10">
-          <v-text-field label="Topic" />
-          <v-text-field label="Picture link" />
-          <v-textarea label="Descriptions" />
-          <v-textarea label="Contents" />
+          <v-text-field label="Topic" v-model="title" />
+          <v-textarea label="Descriptions" v-model="description" />
 
           <v-btn to="/writer/writer_main"> Save </v-btn>
           <v-btn to="/writer/writer_main"> Back </v-btn>
@@ -21,11 +20,10 @@
 export default {
   data() {
     return {
+      id: this.$route.query.id,
       title: "",
-      chapter: "",
       description: "",
       content: "",
-      img: "",
     };
   },
   methods: {
