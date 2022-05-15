@@ -36,10 +36,9 @@
 <script>
 export default {
   async asyncData({ $axios, query }) {
-    const sub = await $axios.$get(`/subject/${query.id}`);
     const q = await $axios.$get(`/quiz/${query.id}`);
     const quiz = q[0].quiz;
-    return { sub, quiz };
+    return { quiz };
   },
   data() {
     return {

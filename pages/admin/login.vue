@@ -43,7 +43,7 @@ export default {
       const payload = {
         username: this.username,
         password: this.password,
-        role: this.role,
+        role: "admin",
       };
 
       try {

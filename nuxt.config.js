@@ -68,12 +68,12 @@ export default {
           user: { url: 'me', method: 'get', propertyName: 'data.user' },
           //subject: { url: 'me', method: 'get', propertyName: 'data.subject' },
           //login2: { url: 'login2', method: 'post', propertyName: 'data.token' },
-          logout: false
+          logout:false,
         }
       }
     },
     redirect: {
-      login: '/login/login'
+      login: '/login/login',
     }
   },
 

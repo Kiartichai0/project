@@ -13,8 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 const user = {
-  username: 'a',
-  role: 'a',
+  username: '',
+  role: '--',
 };
 
 
@@ -24,6 +24,12 @@ router.get('/me', (req, res) => {
       user
     }
   });
+});
+
+router.post('/logout', (req, res) => {
+  user.username = '';
+  user.role = 'role';
+  res.status(200);
 });
 
 /*///READ USERS -----> UNUSED DELETE LATER////
@@ -65,7 +71,7 @@ router.get('/users', (req, res) => {
 //////DELETE USER//////
 app.delete('/users/delete', async (req, res) => {
   const id = req.body.id;
-  await console.log(id);
+  //await console.log(id);
 
   client.connect(async (err) => {
     await client.db('mydb_2').collection('users').deleteOne({ 'username': id });
@@ -100,6 +106,7 @@ router.post('/addsubject', (req, res) => {
   client.connect(async (err) => {
     await client.db('mydb_2').collection('subject').insertOne(subject);
   })
+  res.status(200);
   //client.close();
 });
 
@@ -122,11 +129,13 @@ app.delete('/subject/delete', async (req, res) => {
 
 
 router.post('/addtopic', (req, res) => {
-  const { subject } = req.body;
+  const { data } = req.body;
   //const rand = Math.random();
+  console.log(data);
 
   client.connect(async (err) => {
-    await client.db('mydb_2').collection('subject').updateOne({ name: subject }, { $set: { content: { x: "" } } }, { upsert: true });
+    const collection = await client.db("mydb_2").collection("subject");
+    collection.updateOne({ id: data.id }, { $push: { chapters : { title:data.title, description:data.description, content:data.content} } }, { upsert: true });
   })
   //client.close();
 });
@@ -155,7 +164,7 @@ router.post('/login', (req, res) => {
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("users");
     const data = await collection.find({}).toArray();
-    await console.log(data);
+    //await console.log(data);
     await data.forEach((info, i, arr) => {
       const x = arr.length;
       if (i != (x - 1)) {
@@ -180,7 +189,7 @@ router.post('/login', (req, res) => {
         });
       }
       else {
-        return res.status(401);
+      res.status(401).send('Invalid Data');
         /*return res.status(401).json({
           message: 'Invalid Password'
         });*/
@@ -269,11 +278,14 @@ router.get('/quiz/:id', (req, res) => {
 /*-----------save quiz score-----------------*/
 router.post('/score', (req, res) => {
   // query db.
+ 
   const { data }  = req.body;
   client.connect(async (err) => {
-    const collection = await client.db("mydb_2").collection("quiz");
-    collection.updateOne({ id: data.id },{$set: { score: data.score }});
+    if (err) throw err;
+    const collection = await client.db("mydb_2").collection("subject");
+    collection.updateOne({ id: data.id },{$set: { score: data.score }},{upsert: true});
     //console.dir(data);
+    res.status(200).send('OK');
   })
   //client.close();
 });

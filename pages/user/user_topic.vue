@@ -18,8 +18,7 @@
         </router-link>
 
         <v-card-text>
-          this subject quiz have {{quiz[0].quiz.length}} questions <br/>
-          this last attemp got {{quiz[0].score}} points
+          this last attemp got {{sub[0].score}} points
         </v-card-text>
       </v-card>
     </v-row>
@@ -31,14 +30,14 @@
 export default {
     async asyncData({ $axios, query }) {
       const sub = await $axios.$get(`/subject/${query.id}`);
-      const quiz = await $axios.$get(`/quiz/${query.id}`);
-      return { sub,quiz };
+      //const quiz = await $axios.$get(`/quiz/${query.id}`);
+      return { sub };
     },
     data() {
         return {
         user: this.$auth.user,
         id: this.$route.query.id,
-        loggedIn: this.$auth.loggedIn
+        loggedIn: this.$auth.loggedIn,
         };
     },
     

@@ -1,8 +1,7 @@
 <template>
   <div>
-    <v-card>
+    <v-card align="center">
       <v-card-title class="justify-center ma-5"> Register </v-card-title>
-      <center>
         <v-form class="col-10 justify-center" @submit="register">
           <v-text-field
             label="username"
@@ -39,15 +38,13 @@
             required
           />
 
-          <v-btn type="submit"> Register </v-btn>
-          <v-btn to="/login/login"> back </v-btn>
-          <br />
-          <br />
+          <v-btn type="submit" class="ma-5"> Register </v-btn>
+          <v-btn to="/login/login" class="ma-5"> back </v-btn>
+
           <router-link to="/login/login">
             <v-card-text> Login? </v-card-text>
           </router-link>
         </v-form>
-      </center>
     </v-card>
   </div>
 </template>

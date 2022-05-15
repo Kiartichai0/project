@@ -66,7 +66,7 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
           to: '/inspire'
-        },*/
+        },
         {
           icon: 'mdi-minus-thick',
           title: 'Photo',
@@ -96,7 +96,7 @@ export default {
           icon: 'mdi-plus-thick',
           title: 'Add',
           to: '/sub/add'
-        },
+        },*/
         {
           icon: 'mdi-account',
           title: 'USER',
@@ -107,7 +107,7 @@ export default {
           title: 'Writer',
           to: '/writer/writer_main'
         },
-        {
+        /*{
           icon: 'mdi-plus-thick',
           title: 'Register',
           to: '/login/register'
@@ -116,7 +116,7 @@ export default {
           icon: 'mdi-plus-thick',
           title: 'Login',
           to: '/login/login'
-        },
+        },*/
         {
           icon: 'mdi-plus-thick',
           title: 'Admin',

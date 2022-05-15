@@ -1,17 +1,18 @@
 <template>
   <div>
     <h1>{{id}}</h1>
+    <h1>{{title}}</h1>
+    <h1>{{description}}</h1>
+    <h1>{{content}}</h1>
     <v-card>
       <v-card-title class="justify-center ma-5"> ADD Topic </v-card-title>
-      <center>
-        <v-form class="col-10">
-          <v-text-field label="Topic" v-model="title" />
+        <v-form class="col-10" @submit="addtopic">
+          <v-text-field class="justify-center" label="Topic" v-model="title" />
           <v-textarea label="Descriptions" v-model="description" />
-
-          <v-btn to="/writer/writer_main"> Save </v-btn>
-          <v-btn to="/writer/writer_main"> Back </v-btn>
+          <Editor v-model="content"/>
+          <v-btn class="ma-5" type="submit"> Save </v-btn>
+          <v-btn class="ma-5"> Back </v-btn>
         </v-form>
-      </center>
     </v-card>
   </div>
 </template>
@@ -27,24 +28,20 @@ export default {
     };
   },
   methods: {
-    async addsubject(e) {
+    async addtopic(e) {
       e.preventDefault();
       //await console.log(this.role);
 
       const payload = {
-        subject: {
-          title: this.title,
-          content: {
-            chapter1: {
-              title: this.chapter,
-              description: this.description,
-              content: this.content,
-              img: this.img,
-            },
-          },
+        data: {
+          id: this.$route.query.id,
+          title:this.title,
+          description:this.description,
+          content:this.content,
         },
       };
-      await this.$axios.$post("/addsubject", payload);
+      await this.$axios.$post("/addtopic", payload);
+      await this.$router.push(`/writer/add_quiz?id=${this.this.$route.query.id}`);
     },
   },
 };

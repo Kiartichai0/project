@@ -1,27 +1,23 @@
 <template>
   <div>
-    <v-card>
-      <v-card-title class="justify-center ma-5"> Login </v-card-title>
-      <center>
-        <v-form class="col-10" @submit="login">
+    <v-card align="center">
+      <v-card-title class="justify-center col-10 ma-5"> Login </v-card-title>
+        <v-form class=" col-10" @submit="login">
           <v-text-field label="username" v-model="username" />
           <v-text-field label="password" type="password" v-model="password" />
           <v-select :items="items" label="Role" v-model="role"></v-select>
-          <v-btn type="submit"> Login </v-btn>
+          <v-btn type="submit" class="ma-5"> Login </v-btn>
           <!--v-btn to="/user/user_main"> Login </v-btn-->
-          <v-btn> Back </v-btn>
-          <br />
-          <br />
+          <v-btn class="ma-5" to="/user/user_main"> Back </v-btn>
           <router-link to="/login/register">
             <v-card-text> Register? </v-card-text>
           </router-link>
-          <div class="field">
+          <!--div class="field">
             <p v-if="error" class="notification is-danger">
               {{ error.message }}
             </p>
-          </div>
+          </div-->
         </v-form>
-      </center>
     </v-card>
   </div>
 </template>
@@ -55,8 +51,13 @@ export default {
         await this.$auth.loginWith("local", {
           data: payload,
         });
+        if(this.role == "User"){
+          this.$router.push("/user/user_main");
+        }else{
+          this.$router.push("/writer/writer_main");
+        }
 
-        this.$router.push("/user/user_main");
+
       } catch (e) {
         alert( "wrong username or password or role");
         this.error = e;

@@ -1,15 +1,20 @@
 <template>
   <div v-if="user.role === 'User'">
-    <h1>Only Writer</h1>
-    <v-btn to="/user/user_main">back</v-btn>
+    <div align="center">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <h1>Writer only!!!</h1>
+      <v-btn class="my-5" to="/user/user_main">Back</v-btn>
+    </div>
   </div>
   <div v-else>
-    <v-row>
-      <h1>
-        Hello,{{ user.username }}
-        <v-btn class="button--grey" @click="logout">Logout</v-btn>
-      </h1>
-    </v-row>
+    <p align="right">
+      Hello, {{ user.username
+      }}<v-btn class="ma-5" @click="logout">Logout</v-btn>
+    </p>
     <v-row>
       <v-col class="col-4" v-for="i in subject" :key="i._id">
         <v-card>

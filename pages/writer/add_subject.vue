@@ -34,6 +34,7 @@ export default {
         subject: {
           id:(Math.random() + 1).toString(36).substring(2),
           title: this.title,
+          score: 0,
         },
       };
 
