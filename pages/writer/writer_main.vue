@@ -1,5 +1,15 @@
 <template>
-  <div>
+  <div v-if="user.role === 'User'">
+    <h1>Only Writer</h1>
+    <v-btn to="/user/user_main">back</v-btn>
+  </div>
+  <div v-else>
+    <v-row>
+      <h1>
+        Hello,{{ user.username }}
+        <v-btn class="button--grey" @click="logout">Logout</v-btn>
+      </h1>
+    </v-row>
     <v-row>
       <v-col class="col-4" v-for="i in subject" :key="i._id">
         <v-card>

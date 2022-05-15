@@ -99,7 +99,7 @@ export default {
     </div>
     <div v-else>
         <v-row>
-            <v-btn><nuxt-link to="/login/login" class="button--grey">Login</nuxt-link></v-btn>
+            <v-btn class="ma-5"><nuxt-link to="/login/login" class="button--grey">Login</nuxt-link></v-btn>
         </v-row>
          <v-row>
             <v-col class="col-4" v-for="i in subject" :key="i._id">

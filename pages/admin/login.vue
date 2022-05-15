@@ -8,7 +8,7 @@
           <v-text-field label="password" type="password" v-model="password" />
           <v-btn type="submit"> Login </v-btn>
           <!--v-btn to="/user/user_main"> Login </v-btn-->
-          <v-btn> Back </v-btn>
+          <v-btn to="/user/user_main"> Back </v-btn>
           <br />
           <br />
           <div class="field">

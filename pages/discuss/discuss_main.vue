@@ -5,7 +5,7 @@
         <v-btn to="/discuss/add_topic">add Topic</v-btn>
       </v-row>
       <v-row v-for="i in data" :key="i._id">
-        <v-card>
+        <v-card class="ma-5">
           <router-link
             :to="{
               path: '/discuss/discuss_room',

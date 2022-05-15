@@ -57,7 +57,7 @@ export default {
       drawer: false,
       fixed: false,
       items: [
-        {
+        /*{
           icon: 'mdi-apps',
           title: 'Welcome',
           to: '/'
@@ -66,6 +66,11 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
           to: '/inspire'
+        },*/
+        {
+          icon: 'mdi-minus-thick',
+          title: 'Photo',
+          to: '/sub'
         },
         {
           icon: 'mdi-minus-thick',
@@ -115,7 +120,7 @@ export default {
         {
           icon: 'mdi-plus-thick',
           title: 'Admin',
-          to: '/admin/login'
+          to: '/admin/admin'
         },
         {
           icon: 'mdi-plus-thick',

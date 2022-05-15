@@ -1,9 +1,8 @@
 <template>
   <div v-if="current < quiz.length" align="center">
     <v-row align="center" class="col-6">
-      <v-card>
-        <v-card-title> Question # {{ quiz[current].question }} </v-card-title>
-        <v-card-text> questions is What???????? </v-card-text>
+      <v-card width="100%">
+        <div class="ma-5" v-html="quiz[current].question" />
         <v-card-actions>
           <v-row align="center">
             <v-col class="col-6" v-for="i in quiz[current].choice" :key="i">
@@ -24,28 +23,36 @@
         <v-card-text>Correct answer: {{ quiz[i - 1].correct }}</v-card-text>
         <v-card-text>Your answer: {{ selection[i - 1] }}</v-card-text>
       </v-row>
-      <v-btn class="ma-5" to="/user/user_main"> back </v-btn>
+      <v-btn
+        class="ma-5"
+        :to="{
+          path: '/user/user_topic',
+          query: { id: this.id },
+        }"
+      >
+        back
+      </v-btn>
     </v-card>
   </div>
 </template>
 
 <script>
 export default {
-  created() {
-    console.log("hello world");
-  },
-  async asyncData({ $axios }) {
-    const data = await $axios.$get("/quiz");
-    const quiz = data[3].quiz;
-    return { quiz };
+  async asyncData({ $axios, query }) {
+    const sub = await $axios.$get(`/subject/${query.id}`);
+    const q = await $axios.$get(`/quiz/${query.id}`);
+    const quiz = q[0].quiz;
+    return { sub, quiz };
   },
   data() {
     return {
       user: this.$auth.user,
       loggedIn: this.$auth.loggedIn,
+      id: this.$route.query.id,
       score: 0,
       selection: [],
       current: 0,
+
       //entries: Object.entries(quiz),
     };
   },
@@ -65,6 +72,17 @@ export default {
       this.current++;
       console.log(a, b);
     },
+    /*async back() {
+      const payload = {
+        subject: {
+          id: this.$route.query.id,
+          score: this.title,
+        },
+      };
+
+      await this.$axios.$put("/score", payload);
+      await this.$router.push(`/user/user_topic?id=${this.id}`);
+    },*/
   },
 };
 </script>

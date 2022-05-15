@@ -14,20 +14,9 @@ app.use(express.json());
 
 const user = {
   username: '',
-  role:'',
+  role: '',
 };
 
-
-//////UNUSED DELETE LATER/////
-const subject = {
-  title: 'math',
-  chapter1: {
-    title: 'chapter1',
-    content: 'What is Lorem Ipsum?\n' +
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-  },
-  chapter2: { title: 'chapter2', content: 'this is chapter 2' }
-};
 
 /*client.connect(async (err) => {
   const collection = await client.db("mydb_2").collection("subject");
@@ -88,12 +77,12 @@ app.delete('/users/delete', async (req, res) => {
   await console.log(id);
 
   client.connect(async (err) => {
-    await client.db('mydb_2').collection('users').deleteOne({ 'username': id});
+    await client.db('mydb_2').collection('users').deleteOne({ 'username': id });
   })
 
   res.status(200).send({
     "status": "ok",
-    "message": "User with ID = "+id+" is deleted"
+    "message": "User with ID = " + id + " is deleted"
   });
 
 })
@@ -130,12 +119,12 @@ app.delete('/subject/delete', async (req, res) => {
   await console.log(id);
 
   client.connect(async (err) => {
-    await client.db('mydb_2').collection('subject').deleteOne({ 'title': id});
+    await client.db('mydb_2').collection('subject').deleteOne({ 'title': id });
   })
 
   res.status(200).send({
     "status": "ok",
-    "message": "User with ID = "+id+" is deleted"
+    "message": "User with ID = " + id + " is deleted"
   });
 
 })
@@ -143,22 +132,22 @@ app.delete('/subject/delete', async (req, res) => {
 
 router.post('/addtopic', (req, res) => {
   const { subject } = req.body;
-  const rand = Math.random();
+  //const rand = Math.random();
 
   client.connect(async (err) => {
-    await client.db('mydb_2').collection('subject').updateOne({ name: "Deli Llama" },{ $set: { content: {x:""} }},{ upsert: true });
+    await client.db('mydb_2').collection('subject').updateOne({ name: subject }, { $set: { content: { x: "" } } }, { upsert: true });
   })
   //client.close();
 });
 
-
+/*-----------show subject by ID-----------------*/
 
 router.get('/subject/:id', (req, res) => {
   // query db.
   client.connect(async (err) => {
     const id = req.params.id;
     const collection = await client.db("mydb_2").collection("subject");
-    const data = await collection.find({ "_id": id }).toArray();
+    const data = await collection.find({ 'id': id }).toArray();
     //await data.forEach(console.dir);
     console.dir(data);
     return res.send(data);
@@ -177,9 +166,11 @@ router.post('/login', (req, res) => {
     const data = await collection.find({}).toArray();
     await console.log(data);
     await data.forEach((info, i, arr) => {
-      if(i != (arr.length - 1)){
-        if (username === info.username && password === info.password && role === info.role ) {
+      const x = arr.length;
+      if (i != (x - 1)) {
+        if (username === info.username && password === info.password && role === info.role) {
           user.username = username;
+          user.role = role;
           return res.json({
             data: {
               user,
@@ -187,8 +178,9 @@ router.post('/login', (req, res) => {
             }
           });
         }
-      }else if (username === info.username && password === info.password && role === info.role) {
+      } else if (username === info.username && password === info.password && role === info.role) {
         user.username = username;
+        user.role = role;
         return res.json({
           data: {
             user,
@@ -197,9 +189,10 @@ router.post('/login', (req, res) => {
         });
       }
       else {
-        return res.status(401).json({
+        return res.status(401);
+        /*return res.status(401).json({
           message: 'Invalid Password'
-        });
+        });*/
       }
     }
     );
@@ -260,25 +253,45 @@ router.post('/addcomments', (req, res) => {
   // query db.
   client.connect(async (err) => {
     //const collection = await client.db("mydb_2").collection("users");
-    await client.db('mydb_2').collection('discuss').updateOne( {_id:id},{$set:{
-      comments: {allcomment,comment}
-    }});
+    await client.db('mydb_2').collection('discuss').updateOne({ _id: id }, {
+      $set: {
+        comments: { allcomment, comment }
+      }
+    });
   })
   //client.close();
 });
 
-/*-----------show subject-----------------*/
-router.get('/quiz', (req, res) => {
+/*-----------show quiz-----------------*/
+router.get('/quiz/:id', (req, res) => {
   // query db.
   client.connect(async (err) => {
+    const id = req.params.id;
     const collection = await client.db("mydb_2").collection("quiz");
-    const data = await collection.find({}).toArray();
+    const data = await collection.find({ 'id': id }).toArray();
     //console.dir(data);
     return res.send(data);
   })
   //client.close();
 });
 
+/*-----------save quiz score-----------------*/
+/*router.put('/score', (req, res) => {
+  // query db.
+  const s = req.body;
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("quiz");
+    const data = await collection.updateOne(
+      { id:s.id },
+      {$set: {
+          'score':s.score 
+        }
+      },{upsert:true});
+    //console.dir(data);
+    return res.send(data);
+  })
+  //client.close();
+});*/
 
 app.use(router)
 

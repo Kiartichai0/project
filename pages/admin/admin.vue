@@ -1,12 +1,12 @@
 <template>
-  <div>
+
+  <div v-if="user.role == 'admin' ">
     <v-col>
-      <v-card>
+      <v-card width="100%">
         <v-card-text><center><h1>User</h1></center></v-card-text>
         <div>
-
           <v-row class="col-12 justify-center" v-for="i in users" :key="i._id">
-            <v-card >
+            <v-card width="80%">
               <v-card-text>{{ i.username }} <v-btn color="red lighten-2" text @click="deluser(i.username)"> DEL </v-btn>
               </v-card-text>
             </v-card>
@@ -15,7 +15,7 @@
       </v-card>
     </v-col>
     <v-col>
-      <v-card>
+      <v-card width="100%">
         <v-card-text><center><h1>Subject</h1></center></v-card-text>
         <div>
           <v-row
@@ -23,7 +23,7 @@
             v-for="j in subject"
             :key="j._id"
           >
-            <v-card>
+            <v-card width="80%">
               <v-card-text>{{ j.title }} <v-btn color="red lighten-2" text @click="delsub(j.title)"> DEL </v-btn>
               </v-card-text>
             </v-card>
@@ -32,10 +32,13 @@
       </v-card>
     </v-col>
   </div>
+  <div v-else>
+  <h1>Admininstrator only!!!</h1>
+  <v-btn to="/admin/login">Login</v-btn>
+  </div>
 </template>
 <script>
 export default {
-  middleware: ['logger', 'auth'],
   async asyncData({ $axios }) {
     const users = await $axios.$get("/users");
     const subject = await $axios.$get("/subject");
