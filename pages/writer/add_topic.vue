@@ -1,17 +1,13 @@
 <template>
   <div>
-    <h1>{{id}}</h1>
-    <h1>{{title}}</h1>
-    <h1>{{description}}</h1>
-    <h1>{{content}}</h1>
-    <v-card>
+    <v-card >
       <v-card-title class="justify-center ma-5"> ADD Topic </v-card-title>
-        <v-form class="col-10" @submit="addtopic">
+        <v-form class="col-12" @submit="addtopic">
           <v-text-field class="justify-center" label="Topic" v-model="title" />
           <v-textarea label="Descriptions" v-model="description" />
           <Editor v-model="content"/>
           <v-btn class="ma-5" type="submit"> Save </v-btn>
-          <v-btn class="ma-5"> Back </v-btn>
+          <v-btn class="ma-5" :to="{ path: '/writer/writer_topic', query: { id: id } }"> Back </v-btn>
         </v-form>
     </v-card>
   </div>
@@ -41,7 +37,7 @@ export default {
         },
       };
       await this.$axios.$post("/addtopic", payload);
-      await this.$router.push(`/writer/add_quiz?id=${this.this.$route.query.id}`);
+      await this.$router.push(`/writer/writer_topic?id=${this.$route.query.id}`);
     },
   },
 };

@@ -53,10 +53,7 @@ export default {
     };
   },
   methods: {
-    async logout() {
-      await this.$auth.logout();
-      this.$router.push("/login/login");
-    },
+
     answer(a, b) {
       if (a == b) {
         this.score++;

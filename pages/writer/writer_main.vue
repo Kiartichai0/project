@@ -15,8 +15,13 @@
       Hello, {{ user.username
       }}<v-btn class="ma-5" @click="logout">Logout</v-btn>
     </p>
-    <v-row>
+    <center>
+      <v-btn align="center" width="50%" to="/writer/add_subject"> <v-icon> mdi-plus-thick </v-icon> add subject</v-btn>
+    </center>
+    <v-row class="my-5">
       <v-col class="col-4" v-for="i in subject" :key="i._id">
+      <h1> {{i.id}} </h1>
+        <div align="right"><v-btn class="my-1" @click="delsubject(i.id)"> x </v-btn></div>
         <v-card>
           <nuxt-link
             :to="{
@@ -28,7 +33,7 @@
           </nuxt-link>
         </v-card>
       </v-col>
-      <v-col class="col-4">
+      <!--v-col class="col-4">
         <v-card>
           <router-link to="/writer/add_subject">
             <v-card-text>
@@ -36,7 +41,7 @@
             </v-card-text>
           </router-link>
         </v-card>
-      </v-col>
+      </v-col-->
     </v-row>
   </div>
 </template>
@@ -58,6 +63,10 @@ export default {
     async logout() {
       await this.$auth.logout();
       this.$router.push("/login/login");
+    },
+    async delsubject(id) {
+      await this.$axios.$delete("/subject/delete", { data: { id: id } });
+      await location.reload();
     },
   },
 };

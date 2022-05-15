@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user.role == 'admin' && loggedIn ">
+  <div v-if="loggedIn && user.role == 'admin'   ">
     <v-col>
       <p align="right">
         Hello, {{ user.username }}
@@ -32,13 +32,8 @@
             :key="j._id"
           >
             <v-card width="80%">
-              <v-card-text><nuxt-link :to="{
-                  path: '/writer/writer_topic',
-                  query: { id: j.id },
-                }">{{ j.title }} </nuxt-link> {{ j.id
-                }}<v-btn color="red lighten-2" text @click="delsub(j.title)">
-                  DEL
-                </v-btn>
+              <v-card-text><nuxt-link :to="{ path: '/writer/writer_topic', query: { id: j.id },}">{{ j.title }} </nuxt-link> 
+                <v-btn color="red lighten-2" text @click="delsub(j.id)"> DEL </v-btn>
               </v-card-text>
             </v-card>
           </v-row>
@@ -64,13 +59,12 @@
 export default {
   async asyncData({ $axios }) {
     const users = await $axios.$get("/users");
-    const u = await $axios.$get("/me");
-    const user = u.data.user;
     const subject = await $axios.$get("/subject");
-    return { user, users, subject };
+    return {  users, subject };
   },
   data() {
     return {
+      user:this.$auth.user,
       loggedIn: this.$auth.loggedIn,
     };
   },

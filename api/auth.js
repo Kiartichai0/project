@@ -17,7 +17,7 @@ const user = {
   role: '--',
 };
 
-
+//get current user
 router.get('/me', (req, res) => {
   return res.json({
     data: {
@@ -26,13 +26,14 @@ router.get('/me', (req, res) => {
   });
 });
 
+/*/logout-----UNUSED DELETE LATER/////////
 router.post('/logout', (req, res) => {
   user.username = '';
   user.role = 'role';
   res.status(200);
 });
 
-/*///READ USERS -----> UNUSED DELETE LATER////
+////READ USERS -----> UNUSED DELETE LATER////
 app.get('/users', async (req, res) => {
   const id = parseInt(req.params.id);
   const client = new MongoClient(uri);
@@ -55,7 +56,7 @@ app.get('/users/:id', async (req, res) => {
   });
 })
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**show user*/
+/**show user***/
 router.get('/users', (req, res) => {
   // query db.
   client.connect(async (err) => {
@@ -98,48 +99,6 @@ router.get('/subject', (req, res) => {
   //client.close();
 });
 
-/*-----------add subject-----------------*/
-
-router.post('/addsubject', (req, res) => {
-  const { subject } = req.body;
-
-  client.connect(async (err) => {
-    await client.db('mydb_2').collection('subject').insertOne(subject);
-  })
-  res.status(200);
-  //client.close();
-});
-
-/*-----------delete subject-----------------*/
-
-app.delete('/subject/delete', async (req, res) => {
-  const id = req.body.id;
-  await console.log(id);
-
-  client.connect(async (err) => {
-    await client.db('mydb_2').collection('subject').deleteOne({ 'title': id });
-  })
-
-  res.status(200).send({
-    "status": "ok",
-    "message": "User with ID = " + id + " is deleted"
-  });
-
-})
-
-
-router.post('/addtopic', (req, res) => {
-  const { data } = req.body;
-  //const rand = Math.random();
-  console.log(data);
-
-  client.connect(async (err) => {
-    const collection = await client.db("mydb_2").collection("subject");
-    collection.updateOne({ id: data.id }, { $push: { chapters : { title:data.title, description:data.description, content:data.content} } }, { upsert: true });
-  })
-  //client.close();
-});
-
 /*-----------show subject by ID-----------------*/
 
 router.get('/subject/:id', (req, res) => {
@@ -155,11 +114,93 @@ router.get('/subject/:id', (req, res) => {
   //client.close();
 });
 
+/*-----------add subject-----------------*/
+
+router.post('/addsubject', (req, res) => {
+  const { subject } = req.body;
+
+  client.connect(async (err) => {
+    await client.db('mydb_2').collection('subject').insertOne(subject);
+    await client.db('mydb_2').collection('quiz').insertOne({id:subject.id,quiz:[]});
+  })
+  res.status(200).send(null);
+  //client.close();
+});
+
+/*-----------delete subject-----------------*/
+
+app.delete('/subject/delete', async (req, res) => {
+  const id = req.body.id;
+  //await console.log(id);
+
+  client.connect(async (err) => {
+    await client.db('mydb_2').collection('subject').deleteOne({ 'id': id });
+    await client.db('mydb_2').collection('quiz').deleteOne({ 'id': id });
+  })
+
+  res.status(200).send({
+    "status": "ok",
+    "message": "User with ID = " + id + " is deleted"
+  });
+
+})
+
+/*- Add topic -*/
+
+router.post('/addtopic', (req, res) => {
+  const { data } = req.body;
+  //const rand = Math.random();
+  console.log(data);
+
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("subject");
+    await collection.updateOne({ id: data.id }, { $push: { chapters : { title:data.title, description:data.description, content:data.content,topid:(Math.random() + 1).toString(36).substring(2)} } }, { upsert: true });
+    await res.status(200).send(null);
+  });
+  //res.status(200);
+  //client.close();
+});
+
+//delete topic//
+router.post('/deltopic', (req, res) => {
+  const { data } = req.body;
+  //const rand = Math.random();
+  //console.log(data);
+
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("subject");
+    await collection.updateOne({id: data.id}, {$pull : {chapters:data.topic}});
+    //const collection = await client.db("mydb_2").collection("subject");
+    //collection.updateOne({ id: data.id }, { $pull: { chapters : { title:data.title, description:data.description, content:data.content} } });
+    await res.status(200).send(null);
+  });
+  //res.status(200);
+  //client.close();
+});
+//delete topic//
+router.post('/edittopic', (req, res) => {
+  const { data } = req.body;
+  //const rand = Math.random();
+  console.log(data);
+
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("subject");
+    //await collection.updateOne({id: data.id,"chapters.title":data.title}, {$set : {"chapters.$.title":data.title,"chapters.$.description":data.description,"chapters.$.content":data.content}});
+    await collection.updateOne({id: data.id,"chapters.topid":data.topid}, {$set : {"chapters.$.title":data.title}});
+    await collection.updateOne({id: data.id,"chapters.topid":data.topid}, {$set : {"chapters.$.description":data.description}});
+    await collection.updateOne({id: data.id,"chapters.topid":data.topid}, {$set : {"chapters.$.content":data.content}});
+    //const collection = await client.db("mydb_2").collection("subject");
+    //collection.updateOne({ id: data.id }, { $pull: { chapters : { title:data.title, description:data.description, content:data.content} } });
+    await res.status(200).send(null);
+  });
+  //res.status(200);
+  //client.close();
+});
+
 
 
 router.post('/login', (req, res) => {
   const { username, password, role } = req.body;
-
   // query db.
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("users");
@@ -211,6 +252,7 @@ router.post('/register', (req, res) => {
       password: password,
       role: role,
     });
+    res.status(200).send(null);
   })
   //client.close();
 });
@@ -285,7 +327,7 @@ router.post('/score', (req, res) => {
     const collection = await client.db("mydb_2").collection("subject");
     collection.updateOne({ id: data.id },{$set: { score: data.score }},{upsert: true});
     //console.dir(data);
-    res.status(200).send('OK');
+    res.status(200).send(null);
   })
   //client.close();
 });

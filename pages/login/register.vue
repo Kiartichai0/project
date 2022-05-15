@@ -31,13 +31,6 @@
             required
           ></v-select>
 
-          <v-checkbox
-            label="Do you agree term of service?"
-            :rules="[(v) => !!v || 'You must agree to continue!']"
-            v-model="agree"
-            required
-          />
-
           <v-btn type="submit" class="ma-5"> Register </v-btn>
           <v-btn to="/login/login" class="ma-5"> back </v-btn>
 
@@ -83,6 +76,7 @@ export default {
         alert("Please fill information correctly.");
       } else {
         await this.$axios.$post("/register", payload);
+        await this.$router.push("/login/login");
 
         /*try {
           await this.$auth.loginWith("local", {
