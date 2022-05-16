@@ -1,27 +1,28 @@
 <template>
   <div v-if="current < quiz.length" align="center">
-    <v-row align="center" class="col-6">
+    <v-col align="center" >
       <v-card width="100%">
         <div class="ma-5" v-html="quiz[current].question" />
         <v-card-actions>
           <v-row align="center">
             <v-col class="col-6" v-for="i in quiz[current].choice" :key="i">
-              <v-btn class="ma-5" @click="answer(i, quiz[current].correct)">
+              <v-btn width="40%" height="50" class="ma-5" @click="answer(i, quiz[current].correct)">
                 {{ i }}
               </v-btn>
             </v-col>
           </v-row>
         </v-card-actions>
       </v-card>
-    </v-row>
+    </v-col>
   </div>
   <div v-else>
     <v-card>
-      <v-card-title>your score: {{ score }} of {{ quiz.length }}</v-card-title>
+      <v-card-title >your score: {{ score }} of {{ quiz.length }}</v-card-title>
       <v-row class="ml-5" v-for="i in quiz.length" :key="i">
-        <v-card-title>question: {{ quiz[i - 1].question }}</v-card-title>
+        <v-card-text><h1> <br/><hr/><br/> question: {{i}}  </h1></v-card-text>
+        <v-card-text> <div v-html="quiz[i - 1].question " /></v-card-text>
         <v-card-text>Correct answer: {{ quiz[i - 1].correct }}</v-card-text>
-        <v-card-text>Your answer: {{ selection[i - 1] }}</v-card-text>
+        <v-card-text>Your answer: {{ selection[i - 1] }} </v-card-text>
       </v-row>
       <v-btn
         class="ma-5"

@@ -20,7 +20,6 @@
     </center>
     <v-row class="my-5">
       <v-col class="col-4" v-for="i in subject" :key="i._id">
-      <h1> {{i.id}} </h1>
         <div align="right"><v-btn class="my-1" @click="delsubject(i.id)"> x </v-btn></div>
         <v-card>
           <nuxt-link
@@ -33,15 +32,6 @@
           </nuxt-link>
         </v-card>
       </v-col>
-      <!--v-col class="col-4">
-        <v-card>
-          <router-link to="/writer/add_subject">
-            <v-card-text>
-              <v-icon> mdi-plus-thick </v-icon> add subject
-            </v-card-text>
-          </router-link>
-        </v-card>
-      </v-col-->
     </v-row>
   </div>
 </template>

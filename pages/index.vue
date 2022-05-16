@@ -114,6 +114,9 @@ export default {
 </template>
 <script>
 export default {
+  async created(){
+     await this.$auth.logout();
+  },
     async asyncData({ $axios }) {
       const subject = await $axios.$get('/subject');
       return { subject };

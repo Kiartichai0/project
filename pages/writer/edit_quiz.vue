@@ -75,7 +75,7 @@
             v-else
             class="ma-5"
             :disabled="!button"
-            @click="(choice[temp_i] = c), (c = ''), (edit = true)"
+            @click="(choice[temp_i] = c), (correct = ''), (c = ''), (edit = true)"
           >
             apply answer
           </v-btn>
@@ -106,7 +106,7 @@
           <v-btn
             class="ma-5"
             :disabled="!corek || !edit || !del"
-            @click="addquiz()"
+            @click="quiz()"
             >save</v-btn
           >
           <v-btn
@@ -144,9 +144,9 @@ export default {
       quest: true,
       c: "",
       temp_i: 0,
-      choice: [],
-      question: "",
-      correct: "",
+      choice: this.$route.query.data.choice,
+      question: this.$route.query.data.question,
+      correct: this.$route.query.data.correct,
       corek: true,
       button: true,
       edit: true,
@@ -161,30 +161,19 @@ export default {
         this.quest = false;
       }
     },
-    back() {
-      if (this.choice.length != 0) {
-        this.c = this.choice.pop();
-      } else {
-        this.next = true;
-      }
-    },
-    async addquiz() {
+    async quiz() {
       const payload = {
         data: {
           id: this.id,
           question: this.question,
           choice: this.choice,
           correct: this.correct,
+          qid:this.$route.query.data.qid,
         },
       };
-      if (this.correct == "") {
-        alert("Please select correct answer");
-      } else {
-        await this.$axios.$post("/addquiz", payload);
-        await this.$router.push(
-          `/writer/writer_quiz?id=${this.$route.query.id}`
-        );
-      }
+
+        await this.$axios.$post("/editquiz", payload);
+        await this.$router.push( `/writer/writer_quiz?id=${this.$route.query.id}` );
 
       //await alert(payload.subject.id);
 

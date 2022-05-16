@@ -2,10 +2,11 @@
   <div>
     <v-row class="justify-center" v-for="i in sub[0].chapters" :key="i._id">
       <v-card class="ma-5" width="100%">
-        <v-card-title> <h1>{{ i.title }} </h1></v-card-title>
+        <v-card-title> {{ i.title }} </v-card-title>
+        <v-card-subtitle> {{ i.description }} </v-card-subtitle>
         <div class="ma-5 justify-center" v-html="i.content"/>
         <v-card-actions>
-          <v-btn :to="{ path: '/writer/edit_topic', query: { id: id,content:i.content,title:i.title,description:i.description,topid:i.topid }}" > EDIT </v-btn>
+          <v-btn :to="{ path: '/writer/edit_topic', query: { id: id, data:i }}" > EDIT </v-btn>
           <v-btn @click="deltop(i)"> DELETE </v-btn>
         </v-card-actions>
       </v-card>

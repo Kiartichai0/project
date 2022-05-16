@@ -1,9 +1,5 @@
 <template>
   <div>
-    <h1> {{id}} </h1>
-    <h1> {{content}} </h1>
-    <h1> {{title}} </h1>
-    <h1> {{description}} </h1>
     <v-card>
       <v-card-title class="justify-center ma-5"> Edit Topic </v-card-title>
       <v-form class="col-12" @submit="addtopic">
@@ -29,9 +25,9 @@ export default {
       user: this.$auth.user,
       id: this.$route.query.id,
       loggedIn: this.$auth.loggedIn,
-      content:this.$route.query.content,
-      description:this.$route.query.description,
-      title:this.$route.query.title,
+      content:this.$route.query.data.content,
+      description:this.$route.query.data.description,
+      title:this.$route.query.data.title,
     };
   },
   methods: {

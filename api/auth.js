@@ -177,25 +177,21 @@ router.post('/deltopic', (req, res) => {
   //res.status(200);
   //client.close();
 });
-//delete topic//
+
+//edit topic//
 router.post('/edittopic', (req, res) => {
   const { data } = req.body;
-  //const rand = Math.random();
   console.log(data);
 
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("subject");
-    //await collection.updateOne({id: data.id,"chapters.title":data.title}, {$set : {"chapters.$.title":data.title,"chapters.$.description":data.description,"chapters.$.content":data.content}});
     await collection.updateOne({id: data.id,"chapters.topid":data.topid}, {$set : {"chapters.$.title":data.title}});
     await collection.updateOne({id: data.id,"chapters.topid":data.topid}, {$set : {"chapters.$.description":data.description}});
     await collection.updateOne({id: data.id,"chapters.topid":data.topid}, {$set : {"chapters.$.content":data.content}});
-    //const collection = await client.db("mydb_2").collection("subject");
-    //collection.updateOne({ id: data.id }, { $pull: { chapters : { title:data.title, description:data.description, content:data.content} } });
     await res.status(200).send(null);
   });
-  //res.status(200);
-  //client.close();
 });
+
 
 
 
@@ -303,6 +299,47 @@ router.post('/addcomments', (req, res) => {
   })
   //client.close();
 });
+///////////add quiz/////
+
+router.post('/addquiz', (req, res) => {
+  // query db.
+  client.connect(async (err) => {
+    const { data } = req.body;
+    console.log(data);
+    const collection = await client.db("mydb_2").collection("quiz");
+    await collection.updateOne({ id: data.id }, { $push: { quiz : { question:data.question, choice:data.choice, correct:data.correct, qid:(Math.random() + 1).toString(36).substring(2)} } }, { upsert: true });
+    //console.dir(data);
+    return res.send(null);
+  })
+  //client.close();
+});
+
+//--------------delete quiz
+router.post('/delquiz', (req, res) => {
+  // query db.
+  client.connect(async (err) => {
+    const { data } = req.body;
+    console.log(data);
+    const collection = await client.db("mydb_2").collection("quiz");
+    await collection.updateOne({id: data.id}, {$pull : {quiz:data.quiz}});
+    //console.dir(data);
+    return res.send(null);
+  })
+  //client.close();
+});
+
+//--------------Edit quiz
+router.post('/editquiz', (req, res) => {
+  const { data } = req.body;
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("quiz");
+    await collection.updateOne({id: data.id,"quiz.qid":data.qid}, {$set : {"quiz.$.question":data.question}});
+    await collection.updateOne({id: data.id,"quiz.qid":data.qid}, {$set : {"quiz.$.choice":data.choice}});
+    await collection.updateOne({id: data.id,"quiz.qid":data.qid}, {$set : {"quiz.$.correct":data.correct}});
+    await res.status(200).send(null);
+  });
+});
+
 
 /*-----------show quiz-----------------*/
 router.get('/quiz/:id', (req, res) => {
