@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/writer/add_quiz", {data:[{}],fetch:{},mutations:[]});

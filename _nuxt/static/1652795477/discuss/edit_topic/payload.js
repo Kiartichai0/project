@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/discuss/edit_topic", {data:[{}],fetch:{},mutations:[]});

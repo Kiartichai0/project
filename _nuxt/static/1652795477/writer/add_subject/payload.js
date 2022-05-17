@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/writer/add_subject", {data:[{}],fetch:{},mutations:[]});
