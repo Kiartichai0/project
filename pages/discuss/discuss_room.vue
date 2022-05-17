@@ -7,7 +7,7 @@
     <v-col>
       <v-card>
         <v-col>
-          <p v-if="loggedIn" align="right"><v-btn v-if="user.username == dis[0].user.username">x</v-btn> </p>
+          <p v-if="loggedIn" align="right"><v-btn v-if="user.username == dis[0].user.username" @click="deltopic(idd)">x</v-btn> </p>
             <h1>{{ dis[0].title }}</h1>
             <h4>user: {{ dis[0].user.username }}</h4>
             <div v-html="dis[0].description" />
@@ -44,7 +44,8 @@
 export default {
   async asyncData({ $axios, query }) {
     const dis = await $axios.$get(`/discuss/${query.id}`);
-    return { dis };
+    const idd = await query.id;
+    return { dis, idd };
   },
 
   data() {
@@ -93,6 +94,11 @@ export default {
 
       await this.$axios.$post("/delcomments", payload);
       await this.$nuxt.refresh();
+    },
+     async deltopic(id) {
+
+      await this.$axios.$delete("/discuss/delete",  { data: { id: id } });
+      this.$router.push("/discuss/discuss_main");
     },
     async logout() {
       await this.$auth.logout();

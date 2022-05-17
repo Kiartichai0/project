@@ -257,6 +257,22 @@ router.get('/discuss', (req, res) => {
   })
   //client.close();
 });
+/*-----------delete discuss-----------------*/
+
+app.delete('/discuss/delete', async (req, res) => {
+  const id = req.body.id;
+  //await console.log(id);
+
+  client.connect(async (err) => {
+    await client.db('mydb_2').collection('discuss').deleteOne({ 'id': id });
+  })
+
+  res.status(200).send({
+    "status": "ok",
+    "message": "User with ID = " + id + " is deleted"
+  });
+
+})
 //--show discuss by id--//
 router.get('/discuss/:id', (req, res) => {
   // query db.
