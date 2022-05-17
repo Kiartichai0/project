@@ -245,6 +245,17 @@ app.delete('/discuss/delete', async (req, res) => {
   });
 
 })
+///edit discuss topic
+router.post('/editdiscuss', (req, res) => {
+  const { discuss } = req.body;
+
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("discuss");
+    await collection.updateOne({id: discuss.id}, {$set : {title:discuss.title,description: discuss.description}});
+    res.status(200).send(null);
+  })
+  //client.close();
+});
 
 /*-----------show discussion-----------------*/
 router.get('/discuss', (req, res) => {

@@ -7,7 +7,7 @@
     <v-col>
       <v-card>
         <v-col>
-          <p v-if="loggedIn" align="right"><v-btn v-if="user.username == dis[0].user.username" @click="deltopic(idd)">x</v-btn> </p>
+          <p v-if="loggedIn" align="right"><v-btn :to="{ path: '/discuss/edit_topic', query: { id:id,title:dis[0].title,info:dis[0].description} }" > Edit </v-btn> <v-btn v-if="user.username == dis[0].user.username" @click="deltopic(idd)">x</v-btn> </p>
             <h1>{{ dis[0].title }}</h1>
             <h4>user: {{ dis[0].user.username }}</h4>
             <div v-html="dis[0].description" />
