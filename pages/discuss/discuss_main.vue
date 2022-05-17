@@ -1,21 +1,28 @@
 <template>
   <div>
+      <p v-if="loggedIn" align="right">
+        User: {{ user.username }}
+        <v-btn class="ma-5" @click="logout">Logout</v-btn>
+      </p>
+       <p v-else align="right">
+        <v-btn class="ma-5" to="/login/login">Login</v-btn>
+      </p>
     <section>
-      <v-row>
-        <v-btn to="/discuss/add_topic">add Topic</v-btn>
-      </v-row>
-      <v-row v-for="i in data" :key="i._id">
-        <v-card class="ma-5">
+      <v-col align="center">
+        <v-btn width="80%" v-if="loggedIn" to="/discuss/add_topic">add Topic</v-btn>
+      </v-col>
+      <v-col v-for="i in data" :key="i._id">
+        <v-card >
           <router-link
             :to="{
               path: '/discuss/discuss_room',
-              query: { title: i.title, id: i._id,discuss:i },
+              query: {  id: i.id },
             }"
           >
             <v-card-text>{{ i.title }}</v-card-text>
           </router-link>
         </v-card>
-      </v-row>
+      </v-col>
     </section>
   </div>
 </template>
@@ -34,7 +41,8 @@ export default {
   methods: {
     async logout() {
       await this.$auth.logout();
-      this.$router.push("/login/login");
+      await this.$nuxt.refresh();
+      //this.$router.push("/login/login");
     },
   },
 };

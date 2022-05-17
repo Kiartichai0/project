@@ -1,58 +1,102 @@
 <template>
   <div>
-    <h1>{{ title }}</h1>
-    <div v-html="discuss.description"></div>
-    <!--p>{{ discuss }}</p-->
-    <v-card> <div v-html="info"></div> </v-card>
-    <v-card class="mx-auto"  outlined>
-      <v-list-item three-line>
-        <v-list-item-content>
-
-          <v-list-item-subtitle
-            >{{info}}</v-list-item-subtitle
-          >
-        </v-list-item-content>
-
-      </v-list-item>
-
-    </v-card>
-    <v-form class="col-10" @submit="adddis">
+    <p v-if="loggedIn" align="right">
+      User: {{ user.username }}
+      <v-btn class="ma-5" @click="logout">Logout</v-btn>
+    </p>
+    <v-col>
+      <v-card>
+        <v-col>
+          <p v-if="loggedIn" align="right"><v-btn v-if="user.username == dis[0].user.username">x</v-btn> </p>
+            <h1>{{ dis[0].title }}</h1>
+            <h4>user: {{ dis[0].user.username }}</h4>
+            <div v-html="dis[0].description" />
+        </v-col>
+        <v-col v-for="i in dis[0].comments.length" :key="i">
+          <v-card>
+            <p v-if="loggedIn" align="right">
+              <v-btn  class="ma-1" v-if="user.username == dis[0].comments[i - 1].user" :disabled="!edit"  @click=" (edit = !edit), (temp_c = dis[0].comments[i - 1].cid),  (info = dis[0].comments[i - 1].comment) ">
+                edit 
+              </v-btn>
+              <v-btn class="ma-1"   v-if="user.username == dis[0].comments[i - 1].user"  @click="delcomment(dis[0].comments[i - 1])">
+                x
+              </v-btn>
+            </p>
+            <v-card-text>
+              <div v-html="dis[0].comments[i - 1].comment" />
+              <p align="right">user:{{ dis[0].comments[i - 1].user }}</p>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-card>
+    </v-col>
+    <v-col>
       <Editor v-model="info" />
       <br />
-      <v-btn type="submit"> Save </v-btn>
-      <v-btn to="/writer/writer_main"> Back </v-btn>
-    </v-form>
+      <v-btn v-if="loggedIn && edit" @click="addcomment(), (info = '')">Save</v-btn>
+      <v-btn v-else-if="loggedIn && !edit" @click="editcomment(), (edit = !edit), (info = '')" >Save </v-btn>
+      <v-btn v-else to="../login/login"> Save </v-btn>
+      <v-btn to="/discuss/discuss_main"> Back </v-btn>
+    </v-col>
   </div>
 </template>
 <script>
-import Editor from "../../components/Editor";
 export default {
-  components: {
-    Editor,
+  async asyncData({ $axios, query }) {
+    const dis = await $axios.$get(`/discuss/${query.id}`);
+    return { dis };
   },
 
   data() {
     return {
       user: this.$auth.user,
       loggedIn: this.$auth.loggedIn,
-      title: this.$route.query.title,
       id: this.$route.query.id,
-      discuss: this.$route.query.discuss,
       info: "",
+      temp_c: null,
+      edit: true,
+      edit_t: true,
     };
   },
-   methods: {
-    async adddis(e) {
-      e.preventDefault();
-      //await console.log(this.role);
-
+  methods: {
+    async addcomment() {
       const payload = {
-        id:this.id,
-        comment:this.info,
-        allcomment:this.info
+        data: {
+          id: this.id,
+          comment: this.info,
+          user: this.user.username,
+        },
       };
       await this.$axios.$post("/addcomments", payload);
-      //await this.$router.push("/writer/writer_main");
+      await this.$nuxt.refresh();
+    },
+    async editcomment() {
+      const payload = {
+        data: {
+          id: this.id,
+          comment: this.info,
+          cid: this.temp_c,
+        },
+      };
+
+      await this.$axios.$post("/editcomments", payload);
+      await this.$nuxt.refresh();
+    },
+
+    async delcomment(x) {
+      const payload = {
+        data: {
+          id: this.id,
+          comment: x,
+        },
+      };
+
+      await this.$axios.$post("/delcomments", payload);
+      await this.$nuxt.refresh();
+    },
+    async logout() {
+      await this.$auth.logout();
+      this.$router.push("/discuss/discuss_main");
     },
   },
 };

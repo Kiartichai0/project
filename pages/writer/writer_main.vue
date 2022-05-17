@@ -12,7 +12,7 @@
   </div>
   <div v-else>
     <p align="right">
-      Hello, {{ user.username
+      User: {{ user.username
       }}<v-btn class="ma-5" @click="logout">Logout</v-btn>
     </p>
     <center>

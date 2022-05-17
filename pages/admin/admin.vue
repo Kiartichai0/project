@@ -2,7 +2,7 @@
   <div v-if="loggedIn && user.role == 'admin'   ">
     <v-col>
       <p align="right">
-        Hello, {{ user.username }}
+        User: {{ user.username }}
         <v-btn class="ma-5" @click="logout">Logout</v-btn>
       </p>
 
@@ -40,6 +40,24 @@
         </div>
       </v-card>
     </v-col>
+    <v-col>
+      <v-card width="100%" align="center">
+        <v-card-text><h1>Discussion</h1></v-card-text>
+        <div>
+          <v-row
+            class="col-12 justify-center"
+            v-for="k in discus"
+            :key="k._id"
+          >
+            <v-card width="80%">
+              <v-card-text><nuxt-link :to="{ path: '/discuss/discuss_room', query: { id: k.id },}">{{ k.title }} </nuxt-link> 
+                <v-btn color="red lighten-2" text @click="deldis(k.id)"> DEL </v-btn>
+              </v-card-text>
+            </v-card>
+          </v-row>
+        </div>
+      </v-card>
+    </v-col>
   </div>
   <div v-else>
     <div align="center"> 
@@ -60,7 +78,8 @@ export default {
   async asyncData({ $axios }) {
     const users = await $axios.$get("/users");
     const subject = await $axios.$get("/subject");
-    return {  users, subject };
+    const discus = await $axios.$get("/discuss");
+    return {  users, subject, discus };
   },
   data() {
     return {
@@ -71,12 +90,17 @@ export default {
   methods: {
     async deluser(id) {
       await this.$axios.$delete("/users/delete", { data: { id: id } });
-      await location.reload();
+      await this.$nuxt.refresh();
     },
 
     async delsub(id) {
       await this.$axios.$delete("/subject/delete", { data: { id: id } });
-      await location.reload();
+      await this.$nuxt.refresh();
+    },
+    
+    async deldis(id) {
+      await this.$axios.$delete("/discuss/delete", { data: { id: id } });
+      await this.$nuxt.refresh();
     },
 
     async logout() {

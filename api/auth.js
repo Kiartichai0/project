@@ -26,44 +26,73 @@ router.get('/me', (req, res) => {
   });
 });
 
-/*/logout-----UNUSED DELETE LATER/////////
-router.post('/logout', (req, res) => {
-  user.username = '';
-  user.role = 'role';
-  res.status(200);
-});
+//login
 
-////READ USERS -----> UNUSED DELETE LATER////
-app.get('/users', async (req, res) => {
-  const id = parseInt(req.params.id);
-  const client = new MongoClient(uri);
-  await client.connect();
-  const users = await client.db('mydb_1').collection('users').find({}).toArray();
-  await client.close();
-  res.status(200).send(users);
-})
-
-////READ USERS by ID-----> UNUSED DELETE LATER////
-app.get('/users/:id', async (req, res) => {
-  const id = parseInt(req.params.id);
-  const client = new MongoClient(uri);
-  await client.connect();
-  const user = await client.db('mydb_1').collection('users').findOne({ "id": id });
-  await client.close();
-  res.status(200).send({
-    "status": "ok",
-    "user": user
-  });
-})
-/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**show user***/
-router.get('/users', (req, res) => {
+router.post('/login', (req, res) => {
+  const { username, password, role } = req.body;
   // query db.
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("users");
     const data = await collection.find({}).toArray();
-    //await data.forEach(console.dir);
-    //console.dir(data);
+    //await console.log(data);
+    await data.forEach((info, i, arr) => {
+      const x = arr.length;
+      if (i != (x - 1)) {
+        if (username === info.username && password === info.password && role === info.role) {
+          user.username = username;
+          user.role = role;
+          return res.json({
+            data: {
+              user,
+              token: 'THIS_IS_TOKEN'
+            }
+          });
+        }
+      } else if (username === info.username && password === info.password && role === info.role) {
+        user.username = username;
+        user.role = role;
+        return res.json({
+          data: {
+            user,
+            token: 'THIS_IS_TOKEN'
+          }
+        });
+      }
+      else {
+      res.status(401).send('Invalid Data');
+        /*return res.status(401).json({
+          message: 'Invalid Password'
+        });*/
+      }
+    }
+    );
+  })
+  //client.close();
+});
+
+router.post('/register', (req, res) => {
+  const { username, password, role } = req.body;
+
+  // query db.
+  client.connect(async (err) => {
+    //const collection = await client.db("mydb_2").collection("users");
+    await client.db('mydb_2').collection('users').insertOne({
+      username: username,
+      password: password,
+      role: role,
+    });
+    res.status(200).send(null);
+  })
+  //client.close();
+});
+
+
+
+/**show user***/
+router.get('/users', (req, res) => {
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("users");
+    const data = await collection.find({}).toArray();
     return res.send(data);
   })
   //client.close();
@@ -72,12 +101,9 @@ router.get('/users', (req, res) => {
 //////DELETE USER//////
 app.delete('/users/delete', async (req, res) => {
   const id = req.body.id;
-  //await console.log(id);
-
   client.connect(async (err) => {
     await client.db('mydb_2').collection('users').deleteOne({ 'username': id });
   })
-
   res.status(200).send({
     "status": "ok",
     "message": "User with ID = " + id + " is deleted"
@@ -192,75 +218,33 @@ router.post('/edittopic', (req, res) => {
   });
 });
 
+///add discuss topic
+router.post('/addtopdiscuss', (req, res) => {
+  const { discuss } = req.body;
 
-
-
-router.post('/login', (req, res) => {
-  const { username, password, role } = req.body;
-  // query db.
   client.connect(async (err) => {
-    const collection = await client.db("mydb_2").collection("users");
-    const data = await collection.find({}).toArray();
-    //await console.log(data);
-    await data.forEach((info, i, arr) => {
-      const x = arr.length;
-      if (i != (x - 1)) {
-        if (username === info.username && password === info.password && role === info.role) {
-          user.username = username;
-          user.role = role;
-          return res.json({
-            data: {
-              user,
-              token: 'THIS_IS_TOKEN'
-            }
-          });
-        }
-      } else if (username === info.username && password === info.password && role === info.role) {
-        user.username = username;
-        user.role = role;
-        return res.json({
-          data: {
-            user,
-            token: 'THIS_IS_TOKEN'
-          }
-        });
-      }
-      else {
-      res.status(401).send('Invalid Data');
-        /*return res.status(401).json({
-          message: 'Invalid Password'
-        });*/
-      }
-    }
-    );
-  })
-  //client.close();
-});
-
-router.post('/register', (req, res) => {
-  const { username, password, role } = req.body;
-
-  // query db.
-  client.connect(async (err) => {
-    //const collection = await client.db("mydb_2").collection("users");
-    await client.db('mydb_2').collection('users').insertOne({
-      username: username,
-      password: password,
-      role: role,
-    });
+    await client.db('mydb_2').collection('discuss').insertOne(discuss);
     res.status(200).send(null);
   })
   //client.close();
 });
 
-router.post('/adddiscuss', (req, res) => {
-  const { discuss } = req.body;
+/*-----------delete discussion-----------------*/
+
+app.delete('/discuss/delete', async (req, res) => {
+  const id = req.body.id;
+  //await console.log(id);
 
   client.connect(async (err) => {
-    await client.db('mydb_2').collection('discuss').insertOne(discuss);
+    await client.db('mydb_2').collection('discuss').deleteOne({ 'id': id });
   })
-  //client.close();
-});
+
+  res.status(200).send({
+    "status": "ok",
+    "message": "User with ID = " + id + " is deleted"
+  });
+
+})
 
 /*-----------show discussion-----------------*/
 router.get('/discuss', (req, res) => {
@@ -273,32 +257,59 @@ router.get('/discuss', (req, res) => {
   })
   //client.close();
 });
-
-router.get('/showcomments', (req, res) => {
+//--show discuss by id--//
+router.get('/discuss/:id', (req, res) => {
   // query db.
   client.connect(async (err) => {
+    const id = req.params.id;
     const collection = await client.db("mydb_2").collection("discuss");
-    const data = await collection.find({}).toArray();
+    const data = await collection.find({ 'id': id }).toArray();
+    //await data.forEach(console.dir);
     //console.dir(data);
     return res.send(data);
   })
   //client.close();
 });
 
+//------add comment---------//
 router.post('/addcomments', (req, res) => {
 
-  const { id, comment, allcomment } = req.body;
+  const { data } = req.body;
   // query db.
   client.connect(async (err) => {
-    //const collection = await client.db("mydb_2").collection("users");
-    await client.db('mydb_2').collection('discuss').updateOne({ _id: id }, {
-      $set: {
-        comments: { allcomment, comment }
-      }
-    });
-  })
+    const collection = await client.db("mydb_2").collection("discuss");
+    await collection.updateOne({ id: data.id }, { $push: { comments : { comment:data.comment, user:data.user,cid:(Math.random() + 1).toString(36).substring(2)} } }, { upsert: true });
+    await res.status(200).send(null);
+  });
   //client.close();
 });
+
+//------edit comment---------//
+router.post('/editcomments', (req, res) => {
+
+  const { data } = req.body;
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("discuss");
+    await collection.updateOne({id: data.id,"comments.cid":data.cid}, {$set : {"comments.$.comment":data.comment}});
+    await res.status(200).send(null);
+  });
+
+});
+//------delete comment---------//
+router.post('/delcomments', (req, res) => {
+
+  const { data } = req.body;
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("discuss");
+    await collection.updateOne({id: data.id}, {$pull : {comments:data.comment}});
+    await res.status(200).send(null);
+  });
+
+});
+
+
+
+
 ///////////add quiz/////
 
 router.post('/addquiz', (req, res) => {

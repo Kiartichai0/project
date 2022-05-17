@@ -1,6 +1,6 @@
 <template>
   <div v-if="loggedIn">
-    <p align="right">Hello, {{ user.username }}<v-btn class="ma-5" @click="logout">Logout</v-btn></p>
+    <p align="right">User: {{ user.username }}<v-btn class="ma-5" @click="logout">Logout</v-btn></p>
     <v-row>
       <v-col class="col-4" v-for="i in subject" :key="i._id">
         <v-card>
