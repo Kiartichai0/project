@@ -4,7 +4,7 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
   router: {
-    base: '/project/'
+    base: 'http://Kiartichai0.github.io/project'
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
