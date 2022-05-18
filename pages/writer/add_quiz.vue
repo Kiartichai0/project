@@ -75,7 +75,7 @@
             v-else
             class="ma-5"
             :disabled="!button"
-            @click="(choice[temp_i] = c), (c = ''), (edit = true)"
+            @click="(choice[temp_i] = c), (c = ''),(correct = ''), (edit = true)"
           >
             apply answer
           </v-btn>
