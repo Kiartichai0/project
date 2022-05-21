@@ -15,6 +15,7 @@ app.use(express.json());
 const user = {
   username: '',
   role: '--',
+  id: '',
 };
 
 //get current user
@@ -29,7 +30,7 @@ router.get('/me', (req, res) => {
 //login
 
 router.post('/login', (req, res) => {
-  const { username, password, role } = req.body;
+  const { username, password } = req.body;
   // query db.
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("users");
@@ -38,9 +39,10 @@ router.post('/login', (req, res) => {
     await data.forEach((info, i, arr) => {
       const x = arr.length;
       if (i != (x - 1)) {
-        if (username === info.username && password === info.password && role === info.role) {
+        if (username === info.username && password === info.password) {
           user.username = username;
-          user.role = role;
+          user.role = info.role;
+          user.id = info.id;
           return res.json({
             data: {
               user,
@@ -48,9 +50,10 @@ router.post('/login', (req, res) => {
             }
           });
         }
-      } else if (username === info.username && password === info.password && role === info.role) {
+      } else if (username === info.username && password === info.password) {
         user.username = username;
-        user.role = role;
+        user.role = info.role;
+        user.id = info.id;
         return res.json({
           data: {
             user,
@@ -93,6 +96,18 @@ router.get('/users', (req, res) => {
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("users");
     const data = await collection.find({}).toArray();
+    return res.send(data);
+  })
+  //client.close();
+});
+
+
+/**show user by id***/
+router.get('/users/:id', (req, res) => {
+  client.connect(async (err) => {
+    const id = req.params.id;
+    const collection = await client.db("mydb_2").collection("users");
+    const data = await collection.find({ 'id': id }).toArray();
     return res.send(data);
   })
   //client.close();
@@ -395,15 +410,37 @@ router.get('/quiz/:id', (req, res) => {
 /*-----------save quiz score-----------------*/
 router.post('/score', (req, res) => {
   // query db.
- 
   const { data }  = req.body;
+  //console.log(data);
   client.connect(async (err) => {
     if (err) throw err;
     const collection = await client.db("mydb_2").collection("subject");
-    collection.updateOne({ id: data.id },{$set: { score: data.score }},{upsert: true});
-    //console.dir(data);
+    const info = await collection.find({ 'id': data.id ,"score.uid":data.uid }).toArray();
+    if( info == '' ){
+      console.log("A");
+      await collection.updateOne({ id: data.id }, { $push: { score : { uid:data.uid, score:data.score } } }, { upsert: true });
+    }else{
+      console.log("B");
+      await collection.updateOne({id: data.id,"score.uid":data.uid}, {$set : {"score.$.uid":data.uid}});
+      await collection.updateOne({id: data.id,"score.uid":data.uid}, {$set : {"score.$.score":data.score}});
+    }
     res.status(200).send(null);
   })
+  //client.close();
+});
+
+/*-----------show quiz score by user id-----------------*/
+router.get('/getscore', (req, res) => {
+  // query db.
+  const { data }  = req.body;
+  console.log(data);
+  //console.log(data);
+  /*client.connect(async (err) => {
+    if (err) throw err;
+    const collection = await client.db("mydb_2").collection("subject");
+    const info = await collection.find({ 'id': data.id ,"score.uid":data.uid }).toArray();
+    return res.send(info);
+  })*/
   //client.close();
 });
 

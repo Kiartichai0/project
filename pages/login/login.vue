@@ -5,9 +5,8 @@
         <v-form class=" col-10" @submit="login">
           <v-text-field label="username" v-model="username" />
           <v-text-field label="password" type="password" v-model="password" />
-          <v-select :items="items" label="Role" v-model="role"></v-select>
+          <!--v-select :items="items" label="Role" v-model="role"></v-select-->
           <v-btn type="submit" class="ma-5"> Login </v-btn>
-          <!--v-btn to="/user/user_main"> Login </v-btn-->
           <v-btn class="ma-5" to="/user/user_main"> Back </v-btn>
           <router-link to="/login/register">
             <v-card-text> Register? </v-card-text>
@@ -29,7 +28,7 @@ export default {
 
   data() {
     return {
-      items: ["User", "Writer"],
+      //items: ["User", "Writer"],
       username: "",
       password: "",
       role: "",
@@ -44,18 +43,18 @@ export default {
       const payload = {
         username: this.username,
         password: this.password,
-        role: this.role,
       };
 
       try {
         await this.$auth.loginWith("local", {
           data: payload,
         });
-        if(this.role == "User"){
+        await this.$router.push("/user/user_main");
+        /*if(this.role == "User"){
           this.$router.push("/user/user_main");
         }else{
           this.$router.push("/writer/writer_main");
-        }
+        }*/
 
 
       } catch (e) {

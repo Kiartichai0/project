@@ -17,9 +17,10 @@
   </div>
   <div v-else>
     <v-card>
-      <v-card-title >your score: {{ score }} of {{ quiz.length }}</v-card-title>
+      <v-card-title >คุณได้คะแนน : {{ score }} / {{ quiz.length }} คะแนน </v-card-title>
       <v-row class="ml-5" v-for="i in quiz.length" :key="i">
-        <v-card-text><h1> <br/><hr/><br/> question: {{i}}  </h1></v-card-text>
+        <v-divider class="mx-4"></v-divider>
+        <v-card-text><h1> <br/><br/> question: {{i}}  </h1></v-card-text>
         <v-card-text> <div v-html="quiz[i - 1].question " /></v-card-text>
         <v-card-text>Correct answer: {{ quiz[i - 1].correct }}</v-card-text>
         <v-card-text>Your answer: {{ selection[i - 1] }} </v-card-text>
@@ -71,6 +72,7 @@ export default {
         data: {
           id: this.$route.query.id,
           score: this.score,
+          uid: this.$auth.user.id,
         },
       };
 

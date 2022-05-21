@@ -57,73 +57,28 @@ export default {
       drawer: false,
       fixed: false,
       items: [
-        /*{
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
+        {
+          icon: 'mdi-cog',
+          title: 'Test',
+          to: '/test_page'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        },
-        {
-          icon: 'mdi-minus-thick',
-          title: 'Photo',
-          to: '/sub'
-        },
-        {
-          icon: 'mdi-minus-thick',
-          title: 'TEST',
-          to: '/sub/test'
-        },
-        {
-          icon: 'mdi-minus-thick',
-          title: 'TEST2',
-          to: '/sub/test2'
-        },
-        {
-          icon: 'mdi-minus-thick',
-          title: 'TEST3',
-          to: '/sub/test3'
-        },
-        {
-          icon: 'mdi-minus-thick',
-          title: 'TEST4',
-          to: '/sub/test4'
-        },
-        {
-          icon: 'mdi-plus-thick',
-          title: 'Add',
-          to: '/sub/add'
-        },*/
-        {
-          icon: 'mdi-account',
+          icon: 'mdi-account-circle',
           title: 'USER',
           to: '/user/user_main'
         },
         { 
-          icon: 'mdi-account',
+          icon: 'mdi-book-open-variant',
           title: 'Writer',
           to: '/writer/writer_main'
         },
-        /*{
-          icon: 'mdi-plus-thick',
-          title: 'Register',
-          to: '/login/register'
-        },
         {
-          icon: 'mdi-plus-thick',
-          title: 'Login',
-          to: '/login/login'
-        },*/
-        {
-          icon: 'mdi-plus-thick',
+          icon: 'mdi-account-tie-hat',
           title: 'Admin',
           to: '/admin/admin'
         },
         {
-          icon: 'mdi-plus-thick',
+          icon: 'mdi-comment-question',
           title: 'Discuss',
           to: '/discuss/discuss_main'
         },
@@ -131,7 +86,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Project-Nuxt'
+      title: 'โปรเจค'
     }
   }
 }
