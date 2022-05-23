@@ -1,8 +1,8 @@
 <template>
   <div v-if="loggedIn && user.role == 'admin'   ">
   <p align="right">
-    User: {{ user.username }}
-    <v-btn class="ma-5" @click="logout">Logout</v-btn>
+    ผู้ใช้: {{ user.username }}
+    <v-btn text color="red lighten-2" @click="logout">Logout</v-btn>
   </p>
   <v-card>
     <v-tabs dark background-color="primary" v-model="tab"  grow  >
@@ -19,61 +19,151 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-      <v-col class="my-5" >
-      <v-card align="center">
-        <div>
-          <v-row class="col-12 justify-center" v-for="i in users" :key="i._id">
-            <v-card width="80%">
-              <v-card-text >
-                <nuxt-link :to="{ path: '/user/user_profile', query: { id: i.id },}">{{ i.username }} </nuxt-link> 
-                
-                <v-btn color="red lighten-2" text @click="deluser(i.username)">
-                  DEL
-                </v-btn>
-              </v-card-text>
-            </v-card>
-          </v-row>
-        </div>
-      </v-card>
+      <v-col align="center">
+        <v-row class="col-8">
+          <v-text-field prepend-inner-icon="mdi-magnify" v-model="search" />
+        </v-row>
+        <v-row class="col-8">
+          <p>username</p>
+          <v-spacer></v-spacer>
+          <p>ชื่อ-นามสกุล</p>
+          <v-spacer></v-spacer>
+        </v-row>
+        <v-row class="col-8 " v-for="i in users.filter(x => x.username.toLowerCase().includes(search))" :key="i._id">
+
+              <nuxt-link :to="{ path: '/user/user_profile', query: { id: i.id },}">{{ i.username }} </nuxt-link> 
+              <v-spacer></v-spacer>
+              <nuxt-link :to="{ path: '/user/user_profile', query: { id: i.id },}"> {{ i.firstname }}  {{ i.lastname }} </nuxt-link> 
+              <v-spacer></v-spacer>
+              
+              <!--v-btn color="red lighten-2" text @click="deluser(i.username)">  ลบ </v-btn-->
+            <v-menu  left  bottom  >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn  icon  v-bind="attrs"  v-on="on"  >
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item >
+                <v-btn text color="red lighten-2" @click.stop="dialog_a = true,temp=i.username,temp_id=i.username"> ลบ </v-btn>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-row>
     </v-col>
     </v-tab-item>
     <v-tab-item>
-      <v-col class="my-5">
-      <v-card align="center">
-        <div>
-          <v-row  class="col-12 justify-center"  v-for="j in subject"  :key="j._id"  >
-            <v-card width="80%">
-              <v-card-text><nuxt-link :to="{ path: '/writer/writer_topic', query: { id: j.id },}">{{ j.title }} </nuxt-link> 
-                <v-btn color="red lighten-2" text @click="delsub(j.id)"> DEL </v-btn>
-              </v-card-text>
-            </v-card>
+      <v-col align="center">
+          <v-row class="col-8">
+            <v-text-field prepend-inner-icon="mdi-magnify" v-model="search" />
           </v-row>
-        </div>
-      </v-card>
+          <v-row  class="col-8"  v-for="j in subject.filter(x => x.title.toLowerCase().includes(search))"  :key="j._id"  >
+
+              <nuxt-link :to="{ path: '/writer/writer_topic', query: { id: j.id },}">{{ j.title }} </nuxt-link> 
+              
+              <v-spacer></v-spacer>
+
+              <!--v-btn color="red lighten-2" text @click="delsub(j.id)"> ลบ </v-btn-->
+            
+            <v-menu  left  bottom  >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn  icon  v-bind="attrs"  v-on="on"  >
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item >
+                <v-btn color="red lighten-2" text @click.stop="dialog_b = true,temp=j.title,temp_id=j.id"> ลบ </v-btn>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+              
+          </v-row>
     </v-col>
     </v-tab-item>
     <v-tab-item>
-    <v-col>
-        <v-card width="100%" align="center">
-          <div>
-            <v-row
-              class="col-12 justify-center"
-              v-for="k in discus"
-              :key="k._id"
-            >
-              <v-card width="80%">
-                <v-card-text><nuxt-link :to="{ path: '/discuss/discuss_room', query: { id: k.id },}">{{ k.title }} </nuxt-link> 
-                  <v-btn color="red lighten-2" text @click="deldis(k.id)"> DEL </v-btn>
-                </v-card-text>
-              </v-card>
-            </v-row>
-          </div>
-        </v-card>
+    <v-col align="center">
+      <v-row class="col-8">
+        <v-text-field prepend-inner-icon="mdi-magnify" v-model="search" />
+      </v-row>
+      <v-row class="col-8 justify-center"  v-for="k in discus.filter(x => x.title.toLowerCase().includes(search))"  :key="k._id"  >
+          <nuxt-link :to="{ path: '/discuss/discuss_room', query: { id: k.id },}">{{ k.title }} </nuxt-link> 
+
+          <v-spacer></v-spacer>
+
+          <!--v-btn color="red lighten-2" text @click="deldis(k.id)"> ลบ </v-btn-->
+          <v-menu  left  bottom  >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn  icon  v-bind="attrs"  v-on="on"  >
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item >
+                <v-btn color="red lighten-2" text @click.stop="dialog_c = true,temp=k.title,temp_id=k.id"> ลบ </v-btn>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+      </v-row>
       </v-col>
     </v-tab-item>
     
     </v-tabs-items>
   </v-card>
+  <!--dialog แจ้งเตือนลบข้อมูล-->
+    <v-dialog  v-model="dialog" max-width="400">
+    <v-card>
+      <v-card-title class="text-h5">
+        คุณต้องการลบ {{temp}} ?
+      </v-card-title>
+      <v-card-actions>
+        <v-btn  color="red darken-1"  text  @click="click(temp)"  >  ตกลง  </v-btn>
+        <v-btn  color="darken-1"  text  @click="dialog = false">  ยกเลิก  </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+<!--ลบ user-->
+  <v-dialog  v-model="dialog_a" max-width="400">
+    <v-card>
+      <v-card-title class="text-h5">
+       คุณต้องการลบ {{temp}} ?
+      </v-card-title>
+      <v-card-actions>
+        <v-btn  color="red darken-1"  text  @click="deluser(temp_id),dialog_a = false"  >  ตกลง  </v-btn>
+        <v-btn  color="darken-1"  text  @click="dialog_a = false">  ยกเลิก  </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+<!--ลบ subject-->
+  <v-dialog  v-model="dialog_b" max-width="400">
+    <v-card>
+      <v-card-title class="text-h5">
+       คุณต้องการลบ {{temp}} ?
+      </v-card-title>
+      <v-card-actions>
+        <v-btn  color="red darken-1"  text  @click="delsub(temp_id),dialog_b = false"  >  ตกลง  </v-btn>
+        <v-btn  color="darken-1"  text  @click="dialog_b = false">  ยกเลิก  </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+<!--ลบ discussion-->
+  <v-dialog  v-model="dialog_c" max-width="400">
+    <v-card>
+      <v-card-title class="text-h5">
+       คุณต้องการลบ {{temp}} ?
+      </v-card-title>
+      <v-card-actions>
+        <v-btn  color="red darken-1"  text  @click="deldis(temp_id),dialog_c = false"  >  ตกลง  </v-btn>
+        <v-btn  color="darken-1"  text  @click="dialog_c = false">  ยกเลิก  </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+  <!--dialog แจ้งเตือนลบข้อมูล-->
+
+  
   </div>
   <div v-else>
     <div align="center"> 
@@ -82,8 +172,8 @@
       <br/>
       <br/>
       <br/>
-      <h1 >Administrator only!!!</h1>
-      <v-btn class="my-5" to="/login/login">back</v-btn>
+      <h1 >สำหรับผู้ดูแลระบบเท่านั้น !!!</h1>
+      <nuxt-link to="/user/user_main"> กลับไปหน้าแรก</nuxt-link>
     
     </div>
  
@@ -101,6 +191,13 @@ export default {
     return {
       user:this.$auth.user,
       loggedIn: this.$auth.loggedIn,
+      search:'',
+      temp:'',
+      temp_id:'',
+      dialog_a:false,
+      dialog_b:false,
+      dialog_c:false,
+      dialog:false,
       tab:null
     };
   },
@@ -120,9 +217,13 @@ export default {
       await this.$nuxt.refresh();
     },
 
+     async click(x) {
+      await alert("you just clicked "+x);
+    },
+
     async logout() {
       await this.$auth.logout();
-      this.$router.push("/admin/login");
+      this.$router.push("/login/login");
     },
   },
 };

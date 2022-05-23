@@ -1,10 +1,15 @@
 <template>
-  <div >
-    <h1></h1>
-    <v-card >
+  <div align="center" >
+    <v-card width="50%">
       <v-card-title class="justify-center ma-5"> ADD Subject </v-card-title>
-        <v-form class="col-10" @submit="addsubject">
+        <v-form @submit="addsubject">
+            <div v-if="pic != '' " align="center">
+                <v-avatar size="100"> 
+                  <img :src="pic"/>
+                </v-avatar>
+            </div>
           <v-text-field class="ma-5" label="Subject name" v-model="title" />
+          <v-text-field class="ma-5" label="thumbnail link" v-model="pic" />
           <v-btn class=" ma-5" type="submit"> Save </v-btn>
           <v-btn class=" ma-5" to="/writer/writer_main"> Back </v-btn>
         </v-form>
@@ -13,16 +18,12 @@
 </template>
 
 <script>
-import Editor from "../../components/Editor";
 
 export default {
-  components: {
-    Editor,
-  },
-
   data() {
     return {
       title: "",
+      pic: "",
     };
   },
   methods: {
@@ -34,7 +35,8 @@ export default {
         subject: {
           id:(Math.random() + 1).toString(36).substring(2),
           title: this.title,
-          score: 0,
+          pic: this.pic,
+          score:[],
         },
       };
 

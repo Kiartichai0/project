@@ -74,16 +74,12 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-  const { username, password, role } = req.body;
+  const { data } = req.body;
 
   // query db.
   client.connect(async (err) => {
     //const collection = await client.db("mydb_2").collection("users");
-    await client.db('mydb_2').collection('users').insertOne({
-      username: username,
-      password: password,
-      role: role,
-    });
+    await client.db('mydb_2').collection('users').insertOne(data);
     res.status(200).send(null);
   })
   //client.close();

@@ -20,17 +20,21 @@
     </center>
     <v-row class="my-5">
       <v-col class="col-4" v-for="i in subject" :key="i._id">
-        <div align="right"><v-btn class="my-1" @click="delsubject(i.id)"> x </v-btn></div>
-        <v-card>
-          <nuxt-link
-            :to="{
-              path: '/writer/writer_topic',
-              query: { id: i.id },
-            }"
-          >
-            <v-card-text> {{ i.title }} </v-card-text>
-          </nuxt-link>
-        </v-card>
+        <nuxt-link  :to="{  path: '/writer/writer_topic',  query: { id: i.id },  }"  > 
+          <v-card>
+            <div align="right">
+              <v-btn color="red lighten-2" text @click="delsubject(i.id)"> 
+                x 
+              </v-btn>
+            </div>
+            <div align="center">
+                  <v-avatar color="primary" size="128"> 
+                    <img :src="i.pic" alt="avatar"/>
+                  </v-avatar>
+                  <h1> {{ i.title }} </h1>
+            </div>
+          </v-card>
+        </nuxt-link>
       </v-col>
     </v-row>
   </div>
