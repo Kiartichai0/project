@@ -6,18 +6,14 @@
       <br />
       <br />
       <br />
-      <h1>Writer only!!!</h1>
-      <v-btn class="my-5" to="/user/user_main">Back</v-btn>
+      <h1>สำหรับผู้เขียนเนื้อหาเท่านั้น!!!</h1>
+      <nuxt-link to="/user/user_main"> กลับ </nuxt-link>
     </div>
   </div>
   <div v-else>
     <p align="right">
-      User: {{ user.username
-      }}<v-btn class="ma-5" @click="logout">Logout</v-btn>
+      User: {{ user.username}} <Profile/>
     </p>
-    <center>
-      <v-btn align="center" width="50%" to="/writer/add_subject"> <v-icon> mdi-plus-thick </v-icon> add subject</v-btn>
-    </center>
     <v-row class="my-5">
       <v-col class="col-4" v-for="i in subject" :key="i._id">
         <nuxt-link  :to="{  path: '/writer/writer_topic',  query: { id: i.id },  }"  > 
@@ -29,14 +25,33 @@
             </div>
             <div align="center">
                   <v-avatar color="primary" size="128"> 
-                    <img :src="i.pic" alt="avatar"/>
+                    <img v-if="i.pic" :src="i.pic" alt="avatar"/>
+                    <span v-else class="white--text text-h1"> {{i.title[0]}} </span>
                   </v-avatar>
                   <h1> {{ i.title }} </h1>
             </div>
           </v-card>
         </nuxt-link>
       </v-col>
+      <v-col>
+        <div align="center">
+        <nuxt-link  to="/writer/add_subject" > 
+          <v-card>
+            <v-card-text>
+            <v-avatar color="primary" size="128"> 
+              <v-icon> mdi-plus-thick </v-icon>
+            </v-avatar>
+            </v-card-text>
+            <h1> เพิ่มวิชา </h1>
+          </v-card>
+        </nuxt-link>
+        </div>
+
+      </v-col>
     </v-row>
+      <v-col align="center" >
+        
+      </v-col>
   </div>
 </template>
 

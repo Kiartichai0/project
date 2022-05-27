@@ -16,6 +16,10 @@ const user = {
   username: '',
   role: '--',
   id: '',
+  firstname: '',
+  lastname: '',
+  avatar: '',
+  bio: '',
 };
 
 //get current user
@@ -43,6 +47,10 @@ router.post('/login', (req, res) => {
           user.username = username;
           user.role = info.role;
           user.id = info.id;
+          user.firstname = info.firstname;
+          user.lastname = info.lastname;
+          user.avatar = info.avatar;
+          user.bio = info.bio;
           return res.json({
             data: {
               user,
@@ -54,6 +62,10 @@ router.post('/login', (req, res) => {
         user.username = username;
         user.role = info.role;
         user.id = info.id;
+        user.firstname = info.firstname;
+        user.lastname = info.lastname;
+        user.avatar = info.avatar;
+        user.bio = info.bio;
         return res.json({
           data: {
             user,

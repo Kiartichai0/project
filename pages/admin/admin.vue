@@ -1,8 +1,7 @@
 <template>
   <div v-if="loggedIn && user.role == 'admin'   ">
   <p align="right">
-    ผู้ใช้: {{ user.username }}
-    <v-btn text color="red lighten-2" @click="logout">Logout</v-btn>
+    ผู้ใช้: {{ user.username }} <Profile/>
   </p>
   <v-card>
     <v-tabs dark background-color="primary" v-model="tab"  grow  >

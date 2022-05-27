@@ -1,37 +1,43 @@
 <template>
   <div v-if="loggedIn">
-    <p align="right"> ผู้ใช้: {{ user.username }} <v-btn class="ma-5" @click="logout">Logout</v-btn></p>
-    <v-row>
+  <p align="right"> User: {{ user.username}} <Profile/> </p>
+    <v-row class="my-5">
       <v-col class="col-4" v-for="i in subject" :key="i._id">
-        <v-card>
-          <!--router-link to="/user/user_topic"-->
-          <router-link
-            :to="{
-              path: '/user/user_topic',
-              query: { id: i.id },
-            }"
-          >
-            <v-card-text>{{ i.title }} </v-card-text>
-          </router-link>
-        </v-card>
+        <nuxt-link  :to="{  path: '/user/user_topic',  query: { id: i.id },  }"  > 
+          <v-card>
+            <br>
+            <div align="center">
+              <v-avatar color="primary" size="128"> 
+                <img v-if="i.pic" :src="i.pic" alt="avatar"/>
+                <span v-else class="white--text text-h1"> {{i.title[0]}} </span>
+              </v-avatar>
+              <h1> {{ i.title }} </h1>
+            </div>
+          </v-card>
+        </nuxt-link>
+      </v-col>
+      <v-col>
       </v-col>
     </v-row>
   </div>
   <div v-else>
-    <v-row>
-      <v-btn class="ma-5"
-        ><nuxt-link to="/login/login" class="button--grey"
-          >Login</nuxt-link
-        ></v-btn
-      >
-    </v-row>
-    <v-row>
+    <p align="right" >  <v-btn text color="primary" to="/login/login"> login </v-btn> </p>
+    <v-row class="my-5">
       <v-col class="col-4" v-for="i in subject" :key="i._id">
-        <v-card>
-          <router-link to="/login/login">
-            <v-card-text> {{ i.title }} </v-card-text>
-          </router-link>
-        </v-card>
+        <nuxt-link  to="/login/login"  > 
+          <v-card>
+            <br/>
+            <div align="center">
+                  <v-avatar color="primary" size="128"> 
+                    <img v-if="i.pic" :src="i.pic" alt="avatar"/>
+                    <span v-else class="white--text text-h1"> {{i.title[0]}} </span>
+                  </v-avatar>
+                  <h1> {{ i.title }} </h1>
+            </div>
+          </v-card>
+        </nuxt-link>
+      </v-col>
+      <v-col>
       </v-col>
     </v-row>
   </div>
@@ -47,12 +53,6 @@ export default {
       user: this.$auth.user,
       loggedIn: this.$auth.loggedIn,
     };
-  },
-  methods: {
-    async logout() {
-      await this.$auth.logout();
-      await this.$router.push("/login/login");
-    },
   },
 };
 </script>

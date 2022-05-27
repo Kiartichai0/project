@@ -6,8 +6,8 @@
           <v-text-field label="ชื่อผู้ใช้" v-model="username" />
           <v-text-field label="รหัสผ่าน" type="password" v-model="password" />
           <!--v-select :items="items" label="Role" v-model="role"></v-select-->
-          <v-btn color="primary" type="submit" class="ma-5"> เข้าสู่ระบบ </v-btn>
-          <v-btn class="ma-5" to="/user/user_main"> กลับไปหน้าแรก </v-btn>
+          <v-btn rounded color="primary" type="submit" class="ma-5"> เข้าสู่ระบบ </v-btn>
+          <v-btn rounded class="ma-5" to="/user/user_main"> กลับไปหน้าแรก </v-btn>
           <v-card-text>
             <router-link to="/login/register">
               ลงทะเบียน? 

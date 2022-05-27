@@ -1,5 +1,24 @@
 <template>
   <div>
+    <v-row class=" justify-center">
+      <v-btn class="ma-auto my-2"  width="30%" to="/writer/writer_main"> back </v-btn>
+      <v-btn class="ma-auto my-2" width="30%" :to="{ path: '/writer/add_topic', query: { id: id }}" > addtopic </v-btn>
+      <v-btn class="ma-auto my-2" width="30%" :to="{ path: '/writer/writer_quiz', query: { id: id }}"> quiz </v-btn>
+    </v-row>
+    <v-row>
+      <v-expansion-panels>
+        <v-expansion-panel v-for="i in sub[0].chapters" :key="i._id">
+          <v-expansion-panel-header>
+            <h1>{{ i.title }}</h1>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-btn :to="{ path: '/writer/edit_topic', query: { id: id, data:i }}" > EDIT </v-btn>
+            <v-btn @click="deltop(i)"> DELETE </v-btn>
+            <div class="ma-5 justify-center" v-html="i.content"/>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-row>
     <v-row class="justify-center" v-for="i in sub[0].chapters" :key="i._id">
       <v-card class="ma-5" width="100%">
         <v-card-title> {{ i.title }} </v-card-title>
@@ -12,31 +31,6 @@
       </v-card>
     </v-row>
 
-    <v-row class=" col-12 justify-center">
-        <v-btn class="ma-5 pa-10"  width="15%" to="/writer/writer_main"> back </v-btn>
-        <v-btn class="ma-5 pa-10" width="35%" :to="{ path: '/writer/add_topic', query: { id: id }}" > addtopic </v-btn>
-        <v-btn class="ma-5 pa-10" width="35%" :to="{ path: '/writer/writer_quiz', query: { id: id }}"> quiz </v-btn>
-
-      <!--v-card class="mr-5">
-        <router-link to="/writer/writer_main">
-          <v-card-title> back </v-card-title>
-        </router-link>
-      </v-card>
-      <v-card class="mr-5">
-        <nuxt-link :to="{
-              path: '/writer/add_topic',
-              query: { id: id },
-            }" >
-          <v-card-title> ADD TOPIC </v-card-title>
-        </nuxt-link>
-      </v-card>
-
-      <v-card>
-        <router-link to="/writer/writer_quiz">
-          <v-card-title> quiz </v-card-title>
-        </router-link>
-      </v-card-->
-    </v-row>
   </div>
 </template>
 

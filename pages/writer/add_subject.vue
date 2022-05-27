@@ -41,7 +41,7 @@ export default {
       };
 
       await this.$axios.$post("/addsubject", payload);
-      await this.$router.push("/writer/writer_main");
+      await this.$router.push(`/writer/add_topic/?id=${payload.subject.id}`);
     },
   },
 };
