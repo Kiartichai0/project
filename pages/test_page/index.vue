@@ -1,74 +1,47 @@
 <template>
-  <v-simple-table>
-    <template v-slot:default>
-      <thead>
-        <tr>
-          <th class="text-left">
-            Name
-          </th>
-          <th class="text-left">
-            Calories
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="item in desserts"
-          :key="item.name"
-        >
-          <td>{{ item.name }}</td>
-          <td>{{ item.calories }}</td>
-        </tr>
-      </tbody>
-    </template>
-  </v-simple-table>
+ <div>
+
+    <v-card>
+      <v-card-title>
+        <v-text-field
+          v-model="search"  append-icon="mdi-magnify"  label="ค้นหา"  single-line  hide-details  ></v-text-field>
+      </v-card-title>
+      <v-data-table v-model="selected" show-select :headers="head"  :items="users"  :search="search">
+      </v-data-table>
+      <v-card-text> 
+        <center>
+          <v-btn v-if="selected != '' " width="100%" large color="red lighten-2" text @click="DelUser()"> ลบ </v-btn> 
+        </center>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 <script>
   export default {
+    async asyncData({ $axios }) {
+      const users = await $axios.$get("/users");
+      const subject = await $axios.$get("/subject");
+      const discus = await $axios.$get("/discuss");
+      return {  users, subject, discus };
+    },
     data () {
       return {
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-          },
-        ],
+        search: '',
+        tab:null,
+        selected:[],
+        head:[
+          { text: 'Username', value: 'username' },
+          { text: 'firstname', value: 'firstname' },
+          { text: 'lastname', value: 'lastname' },
+          { text: 'ID', value: 'id' },
+          ],
+      }
+    },
+    methods: {
+      Del(){
+        this.selected.forEach(i => {
+          console.log(i.id);
+        });
       }
     },
   }

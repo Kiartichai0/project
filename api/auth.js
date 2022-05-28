@@ -125,7 +125,7 @@ router.get('/users/:id', (req, res) => {
 app.delete('/users/delete', async (req, res) => {
   const id = req.body.id;
   client.connect(async (err) => {
-    await client.db('mydb_2').collection('users').deleteOne({ 'username': id });
+    await client.db('mydb_2').collection('users').deleteOne({ 'id': id });
   })
   res.status(200).send({
     "status": "ok",

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1> {{quiz[0].quiz}} </h1>
     <v-row  class="col-12 justify-center">
       <h1>{{ sub[0].title }}</h1>
     </v-row>
