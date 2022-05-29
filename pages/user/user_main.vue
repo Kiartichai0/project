@@ -1,6 +1,5 @@
 <template>
   <div v-if="loggedIn">
-  <p align="right"> User: {{ user.username}} <Profile/> </p>
     <v-row class="my-5">
       <v-col class="col-4" v-for="i in subject" :key="i._id">
         <nuxt-link  :to="{  path: '/user/user_topic',  query: { id: i.id },  }"  > 
@@ -21,7 +20,6 @@
     </v-row>
   </div>
   <div v-else>
-    <p align="right" >  <v-btn text color="primary" to="/login/login"> login </v-btn> </p>
     <v-row class="my-5">
       <v-col class="col-4" v-for="i in subject" :key="i._id">
         <nuxt-link  to="/login/login"  > 

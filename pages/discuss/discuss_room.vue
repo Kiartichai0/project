@@ -1,13 +1,9 @@
 <template>
   <div>
-    <p v-if="loggedIn" align="right">
-      User: {{ user.username }}
-      <v-btn class="ma-5" @click="logout">Logout</v-btn>
-    </p>
     <v-col>
       <v-card>
         <v-col>
-          <p v-if="loggedIn" align="right"><v-btn :to="{ path: '/discuss/edit_topic', query: { id:id,title:dis[0].title,info:dis[0].description} }" > Edit </v-btn> <v-btn v-if="user.username == dis[0].user.username" @click="deltopic(idd)">x</v-btn> </p>
+          <p v-if="loggedIn" align="right"><v-btn v-if="user.username == dis[0].user.username" :to="{ path: '/discuss/edit_topic', query: { id:id,title:dis[0].title,info:dis[0].description} }" > Edit </v-btn> <v-btn v-if="user.username == dis[0].user.username" @click="deltopic(idd)">x</v-btn> </p>
             <h1>{{ dis[0].title }}</h1>
             <h4>user: {{ dis[0].user.username }}</h4>
             <div v-html="dis[0].description" />
@@ -98,10 +94,6 @@ export default {
      async deltopic(id) {
 
       await this.$axios.$delete("/discuss/delete",  { data: { id: id } });
-      this.$router.push("/discuss/discuss_main");
-    },
-    async logout() {
-      await this.$auth.logout();
       this.$router.push("/discuss/discuss_main");
     },
   },

@@ -23,6 +23,16 @@
 
     <v-main>
       <v-container>
+
+        <section v-if="loggedIn" align="right">
+            ผู้ใช้: {{user.username}}  <Profile/>
+        </section>
+
+        <section v-else align="right">
+          <v-btn v-if="this.$route.path != '/login/login' && this.$route.path != '/login/register' " text color="primary" to="/login/login" > login </v-btn>
+        </section>
+        
+
         <!--content here-->
         <Nuxt />
         <!--content here-->
@@ -43,6 +53,8 @@ export default {
   name: 'DefaultLayout',
   data () {
     return {
+      user:this.$auth.user,
+      loggedIn: this.$auth.loggedIn,
       clipped: true,
       drawer: false,
       fixed: false,

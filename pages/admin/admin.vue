@@ -1,8 +1,5 @@
 <template>
   <div v-if="loggedIn && user.role == 'admin'   ">
-  <p align="right">
-    ผู้ใช้: {{ user.username }} <Profile/>
-  </p>
   <v-card>
       <v-tabs dark background-color="primary" v-model="tab"  grow  >
         <v-tab>
@@ -24,6 +21,19 @@
                   <v-text-field  v-model="search"  append-icon="mdi-magnify"  label="ค้นหา"  single-line  hide-details  ></v-text-field>
               </v-card-title>
               <v-data-table v-model="selected" show-select :headers="head[tab]"  :items="chunk[tab]"  :search="search">
+
+                <template v-if="tab == 0" #item.username="{ item }">
+                  <nuxt-link :to="{ path: '/user/user_profile', query: { id: item.id },}"> {{ item.username }} </nuxt-link>
+                </template>
+
+                <template v-else-if="tab == 1 " #item.title="{ item }">
+                  <nuxt-link :to="{ path: '/user/user_topic', query: { id: item.id },}"> {{ item.title }} </nuxt-link>
+                </template>
+
+                <template v-else-if="tab == 2" #item.title="{ item }">
+                  <nuxt-link :to="{ path: '/discuss/discuss_room', query: { id: item.id },}"> {{ item.title }} </nuxt-link>
+                </template>
+
               </v-data-table>
               <v-card-text> 
                   <center>
@@ -73,7 +83,7 @@
       const users = await $axios.$get("/users");
       const subject = await $axios.$get("/subject");
       const discus = await $axios.$get("/discuss");
-      const chunk = [users,subject,discus]
+      const chunk = [users,subject,discus];
       return {  users, subject, discus,chunk };
     },
     data() {

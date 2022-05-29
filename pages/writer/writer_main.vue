@@ -11,9 +11,6 @@
     </div>
   </div>
   <div v-else>
-    <p align="right">
-      User: {{ user.username}} <Profile/>
-    </p>
     <v-row class="my-5">
       <v-col class="col-4" v-for="i in subject" :key="i._id">
         <nuxt-link  :to="{  path: '/writer/writer_topic',  query: { id: i.id },  }"  > 

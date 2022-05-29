@@ -1,49 +1,54 @@
 <template>
   <div>
-      <p v-if="loggedIn" align="right">
-        User: {{ user.username }}
-        <v-btn class="ma-5" @click="logout">Logout</v-btn>
-      </p>
-       <p v-else align="right">
-        <v-btn class="ma-5" to="/login/login">Login</v-btn>
-      </p>
     <section>
-      <v-col align="center">
-        <v-btn width="80%" v-if="loggedIn" to="/discuss/add_topic">add Topic</v-btn>
-      </v-col>
-      <v-col v-for="i in data" :key="i._id">
-        <v-card >
-          <router-link
-            :to="{
-              path: '/discuss/discuss_room',
-              query: {  id: i.id },
-            }"
-          >
-            <v-card-text>{{ i.title }}</v-card-text>
-          </router-link>
+      <v-col>
+        <v-card>
+          <v-card-text align="center"> <v-btn text width="100%" color="success" v-if="loggedIn" to="/discuss/add_topic" > <v-icon> mdi-information </v-icon> เพิ่มหัวข้อ </v-btn></v-card-text>
+          <v-card-text>
+            <v-text-field  v-model="search"  append-icon="mdi-magnify"  label="ค้นหา"  single-line  hide-details  ></v-text-field>
+          </v-card-text>
+          <section>
+          <v-data-table :search="search" :headers="head" :items="discus" :page.sync="page" :items-per-page="itemsPerPage" hide-default-footer class="elevation-1" @page-count="pageCount = $event" >
+
+            <template #item.title="{ item }">
+              <nuxt-link :to="{ path: '/discuss/discuss_room', query: { id: item.id },}"> {{ item.title }} </nuxt-link>
+            </template>
+          
+          </v-data-table>
+          <div class="text-center pt-2">
+            <v-pagination v-model="page" :length="pageCount"></v-pagination>
+          </div>
+          </section>
         </v-card>
       </v-col>
     </section>
   </div>
 </template>
 <script>
+import Profile from '~/components/Profile.vue';
 export default {
-  async asyncData({ $axios }) {
-    const data = await $axios.$get("/discuss");
-    return { data };
-  },
-  data() {
-    return {
-      user: this.$auth.user,
-      loggedIn: this.$auth.loggedIn,
-    };
-  },
-  methods: {
-    async logout() {
-      await this.$auth.logout();
-      await this.$nuxt.refresh();
-      //this.$router.push("/login/login");
+    async asyncData({ $axios }) {
+        const discus = await $axios.$get("/discuss");
+        return { discus };
     },
-  },
+    data() {
+        return {
+            user: this.$auth.user,
+            loggedIn: this.$auth.loggedIn,
+            search: "",
+            page: 1,
+            pageCount: 0,
+            itemsPerPage: 10,
+            head: [{ text: "หัวข้อ", value: "title" }],
+        };
+    },
+    methods: {
+        async logout() {
+            await this.$auth.logout();
+            await this.$nuxt.refresh();
+            //this.$router.push("/login/login");
+        },
+    },
+    components: { Profile }
 };
 </script>

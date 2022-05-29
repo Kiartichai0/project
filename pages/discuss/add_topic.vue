@@ -3,11 +3,11 @@
     <v-card>
       <v-form @submit="adddis">
       <br/>
-        <h2 align="center">Question</h2>
-          <v-col width="80%">
-            <v-text-field label="Question" align="center" v-model="title" />
+        <h2 align="center"> คำถาม </h2>
+          <v-col>
+            <v-text-field label="คำถาม" align="center" v-model="title" />
           </v-col>
-          <h2 align="center">description</h2>
+          <h2 align="center"> คำอธิบาย </h2>
           <br />
           <v-col>
             <Editor v-model="info" />

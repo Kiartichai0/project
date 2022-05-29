@@ -47,6 +47,7 @@ export default {
         password: this.password,
       };
 
+
       try {
         await this.$auth.loginWith("local", {
           data: payload,

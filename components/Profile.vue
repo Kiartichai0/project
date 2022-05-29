@@ -41,7 +41,7 @@
       },
       async logout() {
         await this.$auth.logout();
-        await this.$router.push("/login/login");
+        await this.$nuxt.push("/login/login");
       },
     }
   }

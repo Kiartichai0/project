@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p align="right" >  <v-btn text color="primary" to="/login/login"> login </v-btn> </p>
     <v-row class="my-5">
       <v-col class="col-4" v-for="i in subject" :key="i._id">
         <nuxt-link  to="/login/login"  > 
