@@ -50,6 +50,7 @@ export default {
           description: this.info,
           comments: [],
           user:this.$auth.user,
+          date:new Date().toUTCString(),
         },
       };
       await this.$axios.$post("/addtopdiscuss", payload);

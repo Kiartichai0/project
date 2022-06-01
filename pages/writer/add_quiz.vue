@@ -1,5 +1,5 @@
 <template>
-  <div v-if="quest" align="center">
+  <div v-if="quest" >
     <v-card width="50%">
       <h1 class="my-5" align="center">Question</h1>
       <v-card-text width="50%"><Editor v-model="question" /> </v-card-text>

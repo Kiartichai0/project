@@ -23,7 +23,7 @@
               <v-data-table v-model="selected" show-select :headers="head[tab]"  :items="chunk[tab]"  :search="search">
 
                 <template v-if="tab == 0" #item.username="{ item }">
-                  <nuxt-link :to="{ path: '/user/user_profile', query: { id: item.id },}"> {{ item.username }} </nuxt-link>
+                  <nuxt-link :to="{ path: '/login/profile', query: { id: item.id },}"> {{ item.username }} </nuxt-link>
                 </template>
 
                 <template v-else-if="tab == 1 " #item.title="{ item }">

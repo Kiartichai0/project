@@ -1,9 +1,9 @@
 <template>
   <div v-if="loggedIn">
-    <v-row class="my-5">
-      <v-col class="col-4" v-for="i in subject" :key="i._id">
-        <nuxt-link  :to="{  path: '/user/user_topic',  query: { id: i.id },  }"  > 
-          <v-card>
+    <v-row class="mx-auto">
+      <v-col class="col-3" v-for="i in subject" :key="i._id">
+        
+          <v-card min-height="100%" :to="{  path: '/user/user_topic',  query: { id: i.id },  }">
             <br>
             <div align="center">
               <v-avatar color="primary" size="128"> 
@@ -13,7 +13,7 @@
               <h1> {{ i.title }} </h1>
             </div>
           </v-card>
-        </nuxt-link>
+
       </v-col>
       <v-col>
       </v-col>
@@ -21,9 +21,8 @@
   </div>
   <div v-else>
     <v-row class="my-5">
-      <v-col class="col-4" v-for="i in subject" :key="i._id">
-        <nuxt-link  to="/login/login"  > 
-          <v-card>
+      <v-col class="col-3" v-for="i in subject" :key="i._id">
+          <v-card min-height="100%"  to="/login/login">
             <br/>
             <div align="center">
                   <v-avatar color="primary" size="128"> 
@@ -33,7 +32,6 @@
                   <h1> {{ i.title }} </h1>
             </div>
           </v-card>
-        </nuxt-link>
       </v-col>
       <v-col>
       </v-col>

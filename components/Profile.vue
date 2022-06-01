@@ -1,4 +1,6 @@
 <template>
+      <section v-if="this.$auth.loggedIn">
+       ผู้ใช้: {{user.username}}  
       <v-menu bottom min-width="200px" rounded offset-y >
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on" >
@@ -19,13 +21,18 @@
               <h3>{{ user.username }}</h3>
               <p class="text-caption mt-1"> {{ user.firstname }} {{ user.lastname }}</p>
               <v-divider class="my-3"></v-divider>
-              <v-btn depressed text  @click="click()"> Edit Account </v-btn>
+              <v-btn depressed text   @click="click()"> Edit Account </v-btn>
               <v-divider class="my-3"></v-divider>
               <v-btn depressed text @click="logout()"> Logout </v-btn>
             </div>
           </v-list-item-content>
         </v-card>
       </v-menu>
+      </section>
+      <section v-else>
+          <v-btn text color="primary" to="/login/login" > login </v-btn>
+      </section>
+
 </template>
 <script>
   export default {
@@ -41,7 +48,6 @@
       },
       async logout() {
         await this.$auth.logout();
-        await this.$nuxt.push("/login/login");
       },
     }
   }

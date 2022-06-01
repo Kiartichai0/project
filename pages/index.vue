@@ -1,9 +1,9 @@
 <template>
   <div>
     <v-row class="my-5">
-      <v-col class="col-4" v-for="i in subject" :key="i._id">
-        <nuxt-link  to="/login/login"  > 
-          <v-card>
+      <v-col class="col-3" v-for="i in subject" :key="i._id">
+
+          <v-card min-height="100%" to="/login/login">
             <br/>
             <div align="center">
               <v-avatar color="primary" size="128"> 
@@ -13,7 +13,7 @@
               <h1> {{ i.title }} </h1>
             </div>
           </v-card>
-        </nuxt-link>
+
       </v-col>
       <v-col>
       </v-col>
@@ -22,8 +22,8 @@
 </template>
 <script>
 export default {
-  async created(){
-     await this.$auth.logout();
+  created(){
+    this.$auth.logout();
   },
     async asyncData({ $axios }) {
       const subject = await $axios.$get('/subject');

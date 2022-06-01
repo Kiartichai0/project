@@ -274,7 +274,7 @@ router.post('/editdiscuss', (req, res) => {
 
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("discuss");
-    await collection.updateOne({id: discuss.id}, {$set : {title:discuss.title,description: discuss.description}});
+    await collection.updateOne({id: discuss.id}, {$set : {title:discuss.title, description: discuss.description, date:new Date().toUTCString()}});
     res.status(200).send(null);
   })
   //client.close();
@@ -291,22 +291,7 @@ router.get('/discuss', (req, res) => {
   })
   //client.close();
 });
-/*-----------delete discuss-----------------*/
 
-app.delete('/discuss/delete', async (req, res) => {
-  const id = req.body.id;
-  //await console.log(id);
-
-  client.connect(async (err) => {
-    await client.db('mydb_2').collection('discuss').deleteOne({ 'id': id });
-  })
-
-  res.status(200).send({
-    "status": "ok",
-    "message": "User with ID = " + id + " is deleted"
-  });
-
-})
 //--show discuss by id--//
 router.get('/discuss/:id', (req, res) => {
   // query db.
@@ -328,11 +313,24 @@ router.post('/addcomments', (req, res) => {
   // query db.
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("discuss");
-    await collection.updateOne({ id: data.id }, { $push: { comments : { comment:data.comment, user:data.user,cid:(Math.random() + 1).toString(36).substring(2)} } }, { upsert: true });
+    await collection.updateOne({ id: data.id }, { $push: { comments : { comment:data.comment, user:data.user, cid:(Math.random() + 1).toString(36).substring(2), date: new Date().toUTCString() } } }, { upsert: true });
     await res.status(200).send(null);
   });
   //client.close();
 });
+
+//like
+router.post('/likecomments', (req, res) => {
+
+  const { data } = req.body;
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("discuss");
+    await collection.updateOne({id: data.id,"comments.cid":data.cid}, {$push : {"comments.$.like":data.like} }, { upsert: true });
+    await res.status(200).send(null);
+  });
+
+});
+
 
 //------edit comment---------//
 router.post('/editcomments', (req, res) => {
@@ -340,11 +338,12 @@ router.post('/editcomments', (req, res) => {
   const { data } = req.body;
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("discuss");
-    await collection.updateOne({id: data.id,"comments.cid":data.cid}, {$set : {"comments.$.comment":data.comment}});
+    await collection.updateOne({id: data.id,"comments.cid":data.cid}, {$set : {"comments.$.comment":data.comment,"comments.$.date":new Date().toUTCString()}});
     await res.status(200).send(null);
   });
 
 });
+
 //------delete comment---------//
 router.post('/delcomments', (req, res) => {
 

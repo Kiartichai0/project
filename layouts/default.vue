@@ -21,21 +21,17 @@
       <v-spacer />
     </v-app-bar>
 
-    <v-main>
+    <v-main >
       <v-container>
 
-        <section v-if="loggedIn" align="right">
-            ผู้ใช้: {{user.username}}  <Profile/>
+        <section v-if="this.$route.path != '/login/login' && this.$route.path != '/login/register' " align="right">
+          <Profile/>
         </section>
-
-        <section v-else align="right">
-          <v-btn v-if="this.$route.path != '/login/login' && this.$route.path != '/login/register' " text color="primary" to="/login/login" > login </v-btn>
-        </section>
-        
 
         <!--content here-->
         <Nuxt />
         <!--content here-->
+
       </v-container>
     </v-main>
     
@@ -43,7 +39,7 @@
       :absolute="!fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span>  &copy; Ubon Ratchathani University {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
 </template>

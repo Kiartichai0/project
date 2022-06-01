@@ -5,9 +5,10 @@
             <div v-html="sub[0].chapters[current].content"/>
             <v-card-actions class=" justify-center ">
                 <v-btn width="40%" class="ma-auto " :to="{ path: '/user/user_topic', query: { id:id} }"> กลับ </v-btn>
-                <v-btn v-if=" this.current < sub[0].chapters.length-1" width="40%" class="ma-auto " @click="current++" > ต่อไป </v-btn>
+                <v-btn v-if=" this.current < sub[0].chapters.length-1" width="40%" class="ma-auto " @click="scroll()" > ต่อไป </v-btn>
             </v-card-actions>
         </v-card>
+
     </div>
 </template>
 <script>
@@ -26,5 +27,11 @@ export default {
 
         };
     },
+    methods:{
+        async scroll(){
+            await this.current++ ;
+            await window.scrollTo(0,0);
+        },
+    }
 }
 </script>
