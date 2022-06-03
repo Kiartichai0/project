@@ -19,10 +19,11 @@
         <router-link :to="{  path: '/user/user_quiz',  query: { id:id }  }">
           <v-card-title> Quiz </v-card-title>
         </router-link>
+            <v-data-table :headers="[{text:'user',value:'user.username'},{text:'ชื่อ',value:'user.firstname'},{text:'นามสกุล',value:'user.lastname'},{text:'คะแนน',value:'score'}]" :items="sub[0].score" class="elevation-1" ></v-data-table>
       </v-card>
     </v-row>
     <v-row class="col-12 justify-center"
-      ><v-btn to="/user/user_main">back</v-btn></v-row>
+      ><v-btn to="/user/user_main">กลับ</v-btn></v-row>
   </div>
 </template>
 <script>

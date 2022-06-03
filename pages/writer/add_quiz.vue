@@ -1,14 +1,15 @@
 <template>
-  <div v-if="quest" >
-    <v-card width="50%">
-      <h1 class="my-5" align="center">Question</h1>
+  <div v-if="quest" align="center">
+  
+    <v-card  width="50%">
+      <h1 class="my-5" align="center">คำถาม</h1>
       <v-card-text width="50%"><Editor v-model="question" /> </v-card-text>
-      <v-btn width="40%" class="ma-5" @click="toChoice()">next</v-btn>
+      <v-btn width="40%" class="ma-5" @click="toChoice()">ต่อไป</v-btn>
       <v-btn
         width="40%"
         class="ma-5"
         :to="{ path: '/writer/writer_quiz', query: { id: id } }"
-        >back</v-btn
+        >กลับ</v-btn
       >
     </v-card>
   </div>
@@ -16,7 +17,7 @@
     <v-card width="80%">
       <br />
       <div align="center" class="ma-5" v-html="question" />
-      correct answer: {{ correct }}
+      เฉลย: {{ correct }}
       <v-card-actions>
         <v-row>
           <v-col class="col-6" v-for="i in choice.length" :key="i">
@@ -43,7 +44,7 @@
             class="ma-5"
             :disabled="!corek || !edit || !del"
             @click="choice.push(c), (c = '')"
-            >add choice</v-btn
+            >เพิ่มตัวเลือก</v-btn
           >
         </v-col>
         <v-col>
@@ -52,14 +53,14 @@
             class="ma-5"
             :disabled="!button || !edit || !del"
             @click="(corek = false), (button = false)"
-            >Set correct answer
+            >เลือกเฉลย
           </v-btn>
           <v-btn
             v-else
             class="ma-5"
             :disabled="!button"
             @click="(correct = c), (c = ''), (corek = true), (button = true)"
-            >save correct answer
+            >บันทึกเฉลย
           </v-btn>
         </v-col>
         <v-col>
@@ -69,7 +70,7 @@
             :disabled="!button || !corek || !del"
             @click="(edit = false), (button = false)"
           >
-            Edit answer
+            แก้ไขตัวเลือก
           </v-btn>
           <v-btn
             v-else
@@ -77,7 +78,7 @@
             :disabled="!button"
             @click="(choice[temp_i] = c), (c = ''),(correct = ''), (edit = true)"
           >
-            apply answer
+            ยืนยันการแก้ไข
           </v-btn>
         </v-col>
         <v-col>
@@ -87,7 +88,7 @@
             :disabled="!button || !corek || !edit"
             @click="(del = false), (button = false)"
           >
-            Delete answer
+            ลบตัวเลือก
           </v-btn>
           <v-btn
             v-else
@@ -97,7 +98,7 @@
               choice.splice(temp_i, 1), (c = ''), (correct = ''), (del = true)
             "
           >
-            apply Deleted</v-btn
+            ยืนยันการลบ</v-btn
           >
         </v-col>
       </v-row>
@@ -107,13 +108,13 @@
             class="ma-5"
             :disabled="!corek || !edit || !del"
             @click="addquiz()"
-            >save</v-btn
+            >บันทึก</v-btn
           >
           <v-btn
             class="ma-5"
             :disabled="!corek || !edit || !del"
             @click="quest = true"
-            >back</v-btn
+            >กลับ</v-btn
           >
           <v-btn
             v-if="!del || !corek || !edit"
@@ -126,7 +127,7 @@
                 (edit = true)
             "
           >
-            Cancel
+            ยกเลิก
           </v-btn>
         </v-col>
       </v-row>

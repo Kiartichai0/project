@@ -132,6 +132,26 @@ app.delete('/users/delete', async (req, res) => {
     "message": "User with ID = " + id + " is deleted"
   });
 
+});
+
+//////EDIT USER//////
+app.post('/users/update', async (req, res) => {
+  const {data} = req.body;
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("users");
+    await collection.updateOne({id: data.id}, {$set : {firstname:data.firstname, lastname:data.lastname, avatar:data.avatar, bio:data.bio}},{upsert:true});
+  })
+  res.status(200).send(null);
+})
+
+//////EDIT USER PASSWORD//////
+app.post('/users/password', async (req, res) => {
+  const {data} = req.body;
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("users");
+    await collection.updateOne({id: data.id}, {$set : {password:data.password}});
+  })
+  res.status(200).send(null);
 })
 
 
@@ -230,12 +250,11 @@ router.post('/deltopic', (req, res) => {
 //edit topic//
 router.post('/edittopic', (req, res) => {
   const { data } = req.body;
-  console.log(data);
+  //console.log(data);
 
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("subject");
     await collection.updateOne({id: data.id,"chapters.topid":data.topid}, {$set : {"chapters.$.title":data.title}});
-    await collection.updateOne({id: data.id,"chapters.topid":data.topid}, {$set : {"chapters.$.description":data.description}});
     await collection.updateOne({id: data.id,"chapters.topid":data.topid}, {$set : {"chapters.$.content":data.content}});
     await res.status(200).send(null);
   });
@@ -326,6 +345,17 @@ router.post('/likecomments', (req, res) => {
   client.connect(async (err) => {
     const collection = await client.db("mydb_2").collection("discuss");
     await collection.updateOne({id: data.id,"comments.cid":data.cid}, {$push : {"comments.$.like":data.like} }, { upsert: true });
+    await res.status(200).send(null);
+  });
+
+});
+//unlike
+router.post('/unlikecomments', (req, res) => {
+
+  const { data } = req.body;
+  client.connect(async (err) => {
+    const collection = await client.db("mydb_2").collection("discuss");
+    await collection.updateOne({id: data.id,"comments.cid":data.cid}, {$pull : {"comments.$.like":data.like} }, { upsert: true });
     await res.status(200).send(null);
   });
 
@@ -422,14 +452,13 @@ router.post('/score', (req, res) => {
   client.connect(async (err) => {
     if (err) throw err;
     const collection = await client.db("mydb_2").collection("subject");
-    const info = await collection.find({ 'id': data.id ,"score.uid":data.uid }).toArray();
+    const info = await collection.find({ 'id': data.id ,"score.user":data.user }).toArray();
     if( info == '' ){
       console.log("A");
-      await collection.updateOne({ id: data.id }, { $push: { score : { uid:data.uid, score:data.score } } }, { upsert: true });
+      await collection.updateOne({ id: data.id }, { $push: { score : { user:data.user, score:data.score } } }, { upsert: true });
     }else{
       console.log("B");
-      await collection.updateOne({id: data.id,"score.uid":data.uid}, {$set : {"score.$.uid":data.uid}});
-      await collection.updateOne({id: data.id,"score.uid":data.uid}, {$set : {"score.$.score":data.score}});
+      await collection.updateOne({id: data.id,"score.user":data.user}, {$set : {"score.$.score":data.score}});
     }
     res.status(200).send(null);
   })

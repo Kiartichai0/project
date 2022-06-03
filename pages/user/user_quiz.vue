@@ -72,7 +72,7 @@ export default {
         data: {
           id: this.$route.query.id,
           score: this.score,
-          uid: this.$auth.user.id,
+          user: this.$auth.user,
         },
       };
 

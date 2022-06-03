@@ -17,12 +17,12 @@
               </v-col>
             </v-row>
           </v-card-actions>
-          <v-btn class="ma-4" width="30%" :to="{ path: '/writer/edit_quiz', query: { id: id, data:quiz[x-1] ,edit:true }}"> Edit </v-btn>
-          <v-btn class="ma-4" width="30%" @click=" delQuiz(quiz[x-1]) "> Delete </v-btn>
+          <v-btn class="ma-4" width="30%" :to="{ path: '/writer/edit_quiz', query: { id: id, data:quiz[x-1] ,edit:true }}"> แก้ไข </v-btn>
+          <v-btn class="ma-4" width="30%" @click=" delQuiz(quiz[x-1]) "> ลบ </v-btn>
         </v-card>
     </v-col>
-    <v-btn class="ma-5" :to="{ path: '/writer/add_quiz', query: { id: id } }" > add new question </v-btn>
-    <v-btn class="ma-5" :to="{ path: '/writer/writer_topic', query: { id: id } }" > back </v-btn>
+    <v-btn class="ma-5" :to="{ path: '/writer/add_quiz', query: { id: id } }" > เพิ่มคำถาม </v-btn>
+    <v-btn class="ma-5" :to="{ path: '/writer/writer_topic', query: { id: id } }" > กลับ </v-btn>
   </div>
 </template>
 <script>

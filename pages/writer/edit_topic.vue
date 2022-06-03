@@ -2,6 +2,7 @@
   <div>
     <v-card>
       <v-card-title class="justify-center ma-5"> แก้ไขเนื้อหา </v-card-title>
+      <v-card-text> {{this.$route.query.data}} </v-card-text>
       <v-form class="col-12" @submit="addtopic">
         <v-text-field class="justify-center" label="Topic" v-model="title" />
         <Editor v-model="content" />
@@ -27,6 +28,7 @@ export default {
       content:this.$route.query.data.content,
       description:this.$route.query.data.description,
       title:this.$route.query.data.title,
+      topid:this.$route.query.data.topid
     };
   },
   methods: {
@@ -37,9 +39,8 @@ export default {
       const payload = {
         data: {
           id: this.id,
-          topid: this.$route.query.topid,
+          topid: this.topid,
           title: this.title,
-          description: this.description,
           content: this.content,
         },
       };

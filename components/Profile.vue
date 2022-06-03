@@ -21,7 +21,7 @@
               <h3>{{ user.username }}</h3>
               <p class="text-caption mt-1"> {{ user.firstname }} {{ user.lastname }}</p>
               <v-divider class="my-3"></v-divider>
-              <v-btn depressed text   @click="click()"> Edit Account </v-btn>
+              <v-btn depressed text :to="{ path: '/login/profile', query: { id: this.$auth.user.id },}" > Edit Account </v-btn>
               <v-divider class="my-3"></v-divider>
               <v-btn depressed text @click="logout()"> Logout </v-btn>
             </div>

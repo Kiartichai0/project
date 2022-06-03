@@ -14,12 +14,13 @@
     <v-row class="my-5">
       <v-col class="col-3" v-for="i in subject" :key="i._id">
         
-          <v-card min-height="100%" :to="{  path: '/writer/writer_topic',  query: { id: i.id },  }">
+          <v-card min-height="100%" >
             <div align="right">
-              <v-btn color="red lighten-2" text @click="delsubject(i.id)"> 
+              <v-btn color="red lighten-2" text @click="del_subject = i.id , del_dialog = true"> 
                 x 
               </v-btn>
             </div>
+            <v-card flat :to="{  path: '/writer/writer_topic',  query: { id: i.id },  }">
             <div align="center">
                   <v-avatar color="primary" size="128"> 
                     <img v-if="i.pic" :src="i.pic" alt="avatar"/>
@@ -27,6 +28,7 @@
                   </v-avatar>
                   <h1> {{ i.title }} </h1>
             </div>
+            </v-card>
           </v-card>
       </v-col>
       <v-col class="col-3">
@@ -45,9 +47,22 @@
 
       </v-col>
     </v-row>
-      <v-col align="center" >
-        
-      </v-col>
+      <!--dialog ลบsubject-->
+      <v-dialog v-model="del_dialog " max-width="400">
+        <v-spacer></v-spacer>
+          <v-card>
+            <v-card-text></v-card-text>
+            <v-card-text><h2 align="center"> ตุณต้องการลบวิชานี้ ? </h2></v-card-text>
+            
+            <v-card-actions >
+              <div align="center">              
+                <v-btn text color="red" class="ma-5" @click="delsubject(del_subject), del_dialog = false"> ตกลง </v-btn>
+                <v-btn text class="ma-5" @click="del_dialog = false"> ยกเลิก </v-btn>
+              </div>
+            </v-card-actions>
+          </v-card>
+      </v-dialog>
+
   </div>
 </template>
 
@@ -61,6 +76,8 @@ export default {
     return {
       user: this.$auth.user,
       loggedIn: this.$auth.loggedIn,
+      del_subject:'',
+      del_dialog:false,
     };
   },
   methods: {
@@ -70,7 +87,7 @@ export default {
     },
     async delsubject(id) {
       await this.$axios.$delete("/subject/delete", { data: { id: id } });
-      await location.reload();
+      await this.$nuxt.refresh();
     },
   },
 };
