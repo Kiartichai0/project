@@ -19,14 +19,15 @@
 
       <v-toolbar-title v-text="title" />
       <v-spacer />
+        <section v-if="this.$route.path != '/login/login' && this.$route.path != '/login/register' " align="right">
+          <Profile/>
+        </section>
     </v-app-bar>
 
     <v-main >
       <v-container>
 
-        <section v-if="this.$route.path != '/login/login' && this.$route.path != '/login/register' " align="right">
-          <Profile/>
-        </section>
+
 
         <!--content here-->
         <Nuxt />
@@ -55,29 +56,29 @@ export default {
       drawer: false,
       fixed: false,
       items: [
-        {
+        /*{
           icon: 'mdi-cog',
           title: 'Test',
           to: '/test_page'
-        },
+        },*/
         {
           icon: 'mdi-account-circle',
-          title: 'USER',
+          title: 'ผู้ใช้',
           to: '/user/user_main'
         },
         { 
           icon: 'mdi-book-open-variant',
-          title: 'Writer',
+          title: 'ผู้เขียนเนื้อหา',
           to: '/writer/writer_main'
         },
         {
           icon: 'mdi-account-tie-hat',
-          title: 'Admin',
+          title: 'ผู้ดูแลระบบ',
           to: '/admin/admin'
         },
         {
           icon: 'mdi-comment-question',
-          title: 'Discuss',
+          title: 'กระดานสนทนา',
           to: '/discuss/discuss_main'
         },
       ],

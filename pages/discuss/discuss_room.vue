@@ -1,6 +1,7 @@
 <template>
 <div>
-  <v-btn class="my-1" to="/discuss/discuss_main">  กลับ </v-btn>
+  <p> {{user}} </p>
+  <v-btn class="my-1" to="/discuss/discuss_main" text color="primary" ><v-icon> mdi-keyboard-tab-reverse</v-icon> กลับ  </v-btn>
   <v-card >
       <br/>
       <!--คำถาม-->
@@ -8,8 +9,7 @@
         <v-card-title> 
           {{ dis[0].title}} 
               <v-spacer></v-spacer>
-
-              <v-menu v-if="this.$auth.loggedIn && this.$auth.user.id == dis[0].user.id" :offset-y="true">
+              <v-menu v-if="this.$auth.loggedIn && user.id == dis[0].user.id" :offset-y="true">
                 <template v-slot:activator="{ on }">
                   <v-btn icon v-on="on">
                     <v-icon>mdi-dots-vertical</v-icon>
@@ -203,9 +203,8 @@
   export default {
     async asyncData({ $axios, query }) {
       const dis = await $axios.$get(`/discuss/${query.id}`);
-      //const dis = await $axios.$get(`/discuss/8o1db3r1kt`);
-      //const idd = await query.id;
-      return { dis };
+      const user = await $axios.$get(`/me`);
+      return { dis,user };
     },
     data(){
       return{
@@ -219,7 +218,7 @@
         comment_id:'',
         comment_edit:'',
         comment_delete:'',
-        user: this.$auth.user,
+        //user: this.$auth.user,
         loggedIn: this.$auth.loggedIn,
         like:0,
         thumb:true,
@@ -292,16 +291,23 @@
         await this.$nuxt.refresh();
       },
       async likeComment(x) {
-        const payload = {
-          data: {
-            id: this.$route.query.id,
-            like: this.$auth.user.id,
-            cid: x,
-          },
-        };
 
-        await this.$axios.$post("/likecomments", payload );
-        await this.$nuxt.refresh();
+       
+        if(this.loggedIn){
+            const payload = {
+              data: {
+                id: this.$route.query.id,
+                like: this.$auth.user.id,
+                cid: x,
+              },
+            };
+            await this.$axios.$post("/likecomments", payload );
+            await this.$nuxt.refresh();
+        }
+        else{ 
+          alert("จำเป็นต้องเข้าสู่ระบบก่อน");
+        }
+
       },
       async unlikeComment(x) {
         const payload = {
@@ -315,25 +321,6 @@
         await this.$axios.$post("/unlikecomments", payload );
         await this.$nuxt.refresh();
       },
-
-
-
-
-
-      async doSomethings(){
-        if(this.thumb){
-          await this.like ++;
-        }
-        else{
-          await this.like --;
-        }
-        
-        //await alert("You just clicked!!");
-      },
-      async doSomethings2(){
-        await alert("You just clicked!!");
-      },
-      
       
     }
   }

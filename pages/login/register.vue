@@ -93,24 +93,20 @@
 <script>
   export default {
     data () {
-      const defaultForm = Object.freeze({
-        first: '',
-        last: '',
-        bio: '',
-        role: '',
-        pic: '',
-        username: '',
-        password1: '',
-        password2: '',
-        terms: false,
-      })
 
       return {
-        form: Object.assign({}, defaultForm),
+        form: {
+          first: '',
+          last: '',
+          bio: '',
+          role: '',
+          pic: '',
+          username: '',
+          password1: '',
+          password2: '',
+          terms: false,
+        },
         rules: {
-          /*age: [
-            val => val < 10 || `I don't believe you!`,
-          ],*/
           password: [val => (val == this.form.password1) || 'จำเป็นต้องกรอก password ให้ตรงกัน'],
           role: [val => (val || '').length > 0 || 'This field is required'],
           name: [val => (val || '').length > 0 || 'This field is required'],
@@ -121,7 +117,6 @@
         terms: false,
         show1:false,
         show2:false,
-        defaultForm,
       }
     },
 
@@ -140,10 +135,6 @@
     },
 
     methods: {
-      resetForm () {
-        this.form = Object.assign({}, this.defaultForm);
-        this.$refs.form.reset()
-      },
       async submit () {
         const payload = {
         data:{
@@ -160,22 +151,6 @@
       };
       await this.$axios.$post("/register", payload);
       await this.$router.push("/login/login");
-
-      //this.$nuxt.refresh();
-      /*if (
-        this.username === "" ||
-        this.password === "" ||
-        this.password2 === "" ||
-        this.role == "" ||
-        this.password !== this.password2
-      ) {
-        alert("Please fill information correctly.");
-      } else {
-        await this.$axios.$post("/register", payload);
-        await this.$router.push("/login/login");
-      }
-        /*alert(this.form.role);
-        this.resetForm();*/
       },
     },
   }

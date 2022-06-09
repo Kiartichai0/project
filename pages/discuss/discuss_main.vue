@@ -46,7 +46,6 @@ export default {
         async logout() {
             await this.$auth.logout();
             await this.$nuxt.refresh();
-            //this.$router.push("/login/login");
         },
     },
     components: { Profile }
