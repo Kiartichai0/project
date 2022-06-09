@@ -1,6 +1,5 @@
 <template>
 <div>
-  <p> {{user}} </p>
   <v-btn class="my-1" to="/discuss/discuss_main" text color="primary" ><v-icon> mdi-keyboard-tab-reverse</v-icon> กลับ  </v-btn>
   <v-card >
       <br/>
