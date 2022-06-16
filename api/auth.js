@@ -75,9 +75,6 @@ router.post('/login', (req, res) => {
       }
       else {
       res.status(401).send('Invalid Data');
-        /*return res.status(401).json({
-          message: 'Invalid Password'
-        });*/
       }
     }
     );
@@ -85,6 +82,24 @@ router.post('/login', (req, res) => {
   //client.close();
 });
 
+//logout
+router.get('/logout', (req, res) => {
+  user.username = '';
+  user.role = '';
+  user.id = '';
+  user.firstname = '';
+  user.lastname = '';
+  user.avatar = '';
+  user.bio = '';
+  return res.json({
+    data: {
+      user
+    }
+  });
+});
+
+
+//register
 router.post('/register', (req, res) => {
   const { data } = req.body;
 
@@ -207,10 +222,7 @@ app.delete('/subject/delete', async (req, res) => {
     await client.db('mydb_2').collection('quiz').deleteOne({ 'id': id });
   })
 
-  res.status(200).send({
-    "status": "ok",
-    "message": "User with ID = " + id + " is deleted"
-  });
+  res.status(200).send(null);
 
 })
 
@@ -462,21 +474,6 @@ router.post('/score', (req, res) => {
     }
     res.status(200).send(null);
   })
-  //client.close();
-});
-
-/*-----------show quiz score by user id-----------------*/
-router.get('/getscore', (req, res) => {
-  // query db.
-  const { data }  = req.body;
-  console.log(data);
-  //console.log(data);
-  /*client.connect(async (err) => {
-    if (err) throw err;
-    const collection = await client.db("mydb_2").collection("subject");
-    const info = await collection.find({ 'id': data.id ,"score.uid":data.uid }).toArray();
-    return res.send(info);
-  })*/
   //client.close();
 });
 

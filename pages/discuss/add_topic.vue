@@ -15,8 +15,8 @@
           <br />
           <v-col>
             <v-row class="ma-5 justify-center">
-              <v-btn class="ma-5" type="submit"> Save </v-btn>
-              <v-btn class="ma-5" to="/discuss/discuss_main"> Back </v-btn>
+              <v-btn class="ma-5" type="submit"> บันทึก </v-btn>
+              <v-btn class="ma-5" to="/discuss/discuss_main"> กลับ </v-btn>
             </v-row>
           </v-col>
       </v-form>

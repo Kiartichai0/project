@@ -63,15 +63,14 @@ export default {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: 'http://localhost:3000/api',
   },
+  
   auth: {
     strategies: {
       local: {
         endpoints: {
           login: { url: 'login', method: 'post', propertyName: 'data.token' },
           user: { url: 'me', method: 'get', propertyName: 'data.user' },
-          //subject: { url: 'me', method: 'get', propertyName: 'data.subject' },
-          //login2: { url: 'login2', method: 'post', propertyName: 'data.token' },
-          logout:false,
+          logout:{ url: 'logout', method: 'get', propertyName: 'data.user' },
         }
       }
     },

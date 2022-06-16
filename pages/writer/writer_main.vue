@@ -81,10 +81,6 @@ export default {
     };
   },
   methods: {
-    async logout() {
-      await this.$auth.logout();
-      this.$router.push("/login/login");
-    },
     async delsubject(id) {
       await this.$axios.$delete("/subject/delete", { data: { id: id } });
       await this.$nuxt.refresh();

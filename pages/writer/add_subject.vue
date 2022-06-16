@@ -39,9 +39,12 @@ export default {
           score:[],
         },
       };
-
-      await this.$axios.$post("/addsubject", payload);
-      await this.$router.push(`/writer/add_topic/?id=${payload.subject.id}`);
+      try{      
+        await this.$axios.$post("/addsubject", payload);
+        await this.$router.push(`/writer/add_topic/?id=${payload.subject.id}`);}
+      catch(e){
+        console.log(e);
+      }
     },
   },
 };

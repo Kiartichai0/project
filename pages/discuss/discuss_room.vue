@@ -107,9 +107,8 @@
             </v-list-item-content>
 
             <v-row justify="end">
-              <p>  </p>
 
-              <v-icon v-if="item.like == null || !item.like.includes(user.id) " class="mr-1" @click="likeComment(item.cid) "> mdi-thumb-up-outline </v-icon>
+              <v-icon v-if="item.like == null || !item.like.includes(user.data.user.id) " class="mr-1" @click="likeComment(item.cid) "> mdi-thumb-up-outline </v-icon>
               <v-icon v-else class="mr-1" @click="unlikeComment(item.cid)"> mdi-thumb-up </v-icon>
               
               <span v-if = " item.like != null " class="subheading mr-2"> {{item.like.length}} </span>

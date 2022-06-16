@@ -85,7 +85,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'โปรเจค'
+      title: 'แอปพลิเคชันเพื่อสนับสนุนการศึกษาด้วยตนเอง'
     }
   }
 }

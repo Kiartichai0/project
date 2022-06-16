@@ -13,7 +13,7 @@
           </v-col>
 
           <v-col cols="12" >
-            <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" counter @click:append="show1 = !show1" v-model="form.password2" :rules="rules.password" label="รหัสผ่าน อีกครั้ง" required ></v-text-field>
+            <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show2 ? 'text' : 'password'" counter @click:append="show2 = !show2" v-model="form.password2" :rules="rules.password" label="ยืนยันรหัสผ่าน" required ></v-text-field>
           </v-col>
           
           <v-col cols="12" sm="6" >
@@ -47,10 +47,11 @@
             <v-checkbox v-model="form.terms" color="green" >
               <template v-slot:label>
                 <div @click.stop="">
-                  Do you accept the
-                  <a href="#" @click.prevent="terms = true" >terms</a>
-                  and
-                  <a href="#" @click.prevent="conditions = true" >conditions?</a>
+                  คุณจะยอมรับ
+                  <a href="#" @click.prevent="terms = true" >ข้อตกลง</a>
+                  และ
+                  <a href="#" @click.prevent="conditions = true" >เงื่อนไข</a>
+                  หรือไม่
                 </div>
               </template>
             </v-checkbox>
@@ -67,11 +68,11 @@
 
     <v-dialog v-model="terms" width="70%" >
       <v-card>
-        <v-card-title class="text-h6"> Terms </v-card-title>
+        <v-card-title class="text-h6"> ข้อตกลง </v-card-title>
         <v-card-text v-for="n in 5" :key="n" > {{ content }} </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="terms = false" > Ok </v-btn>
+          <v-btn text @click="terms = false" > ตกลง </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -108,12 +109,12 @@
         },
         rules: {
           password: [val => (val == this.form.password1) || 'จำเป็นต้องกรอก password ให้ตรงกัน'],
-          role: [val => (val || '').length > 0 || 'This field is required'],
-          name: [val => (val || '').length > 0 || 'This field is required'],
+          role: [val => (val || '').length > 0 || 'จำเป็นต้องกรอกช่องนี้'],
+          name: [val => (val || '').length > 0 || 'จำเป็นต้องกรอกช่องนี้'],
         },
         roles: ['Writer', 'User'],
         conditions: false,
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.',
+        content: 'นี่คือเงื่อนไขการเป็นสมาชิก',
         terms: false,
         show1:false,
         show2:false,
