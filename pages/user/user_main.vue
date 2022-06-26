@@ -19,6 +19,7 @@
       </v-col>
     </v-row>
   </div>
+
   <div v-else>
     <v-row class="my-5">
       <v-col class="col-3" v-for="i in subject" :key="i._id">
@@ -37,6 +38,7 @@
       </v-col>
     </v-row>
   </div>
+  
 </template>
 <script>
 export default {

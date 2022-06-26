@@ -45,7 +45,6 @@ export default {
   data() {
     return {
       user: this.$auth.user,
-      loggedIn: this.$auth.loggedIn,
       id: this.$route.query.id,
       score: 0,
       selection: [],

@@ -32,7 +32,6 @@ export default {
         data: {
           id: this.$route.query.id,
           title:this.title,
-          description:this.description,
           content:this.content,
         },
       };

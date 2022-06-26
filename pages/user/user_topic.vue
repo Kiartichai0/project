@@ -10,8 +10,7 @@
         <router-link  :to="{  path: '/user/user_content',  query: { id:id, current:sub[0].chapters.indexOf(i)}  }" >
           <v-card-title> {{ i.title }} </v-card-title>
         </router-link>
-        <v-card-text>{{ i.description }}
-        <div v-html="i.content.slice(0,200)+'...'"/></v-card-text>
+        <v-card-text><div v-html="i.content.slice(0,200)+'...'"/></v-card-text>
       </v-card>
     </v-row>
     <v-row v-if="quiz[0].quiz != '' " class=" col-12 justify-center">
@@ -28,7 +27,7 @@
 </template>
 <script>
 export default {
-    async asyncData({ $axios, query, $auth }) {
+    async asyncData({ $axios, query }) {
       const sub = await $axios.$get(`/subject/${query.id}`);
       const quiz = await $axios.$get(`/quiz/${query.id}`);
       return { sub,quiz };

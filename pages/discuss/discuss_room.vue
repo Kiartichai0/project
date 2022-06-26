@@ -72,7 +72,7 @@
             <v-card-title >
               <p>  </p>
               <v-spacer></v-spacer>
-              <v-menu v-if="item.user.id == user.id " :offset-y="true">
+              <v-menu v-if="item.user.id == user.data.user.id " :offset-y="true">
                 <template v-slot:activator="{ on }">
                   <v-btn icon v-on="on">
                     <v-icon>mdi-dots-vertical</v-icon>
@@ -234,7 +234,7 @@
           data: {
             id: this.$route.query.id,
             comment: this.comment,
-            user: this.user,
+            user: this.user.data.user,
             like:[]
           },
         };

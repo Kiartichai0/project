@@ -1,8 +1,10 @@
 <template>
     <div>
-        <v-card flat>
+        <v-card >
             <v-card-title><h2> {{sub[0].chapters[current].title}} </h2></v-card-title>
-            <div v-html="sub[0].chapters[current].content"/>
+
+            <div class="mx-5" v-html="sub[0].chapters[current].content"/>
+            
             <v-card-actions class=" justify-center ">
                 <v-btn v-if = "this.current > 0" width="40%" class="ma-auto " @click="scrollBack()" > กลับ  </v-btn>
                 <v-btn v-else width="40%" class="ma-auto " :to="{ path: '/user/user_topic', query: { id:id} }"> กลับ </v-btn>

@@ -2,7 +2,6 @@
   <div>
     <v-card>
       <v-card-title class="justify-center ma-5"> แก้ไขเนื้อหา </v-card-title>
-      <v-card-text> {{this.$route.query.data}} </v-card-text>
       <v-form class="col-12" @submit="addtopic">
         <v-text-field class="justify-center" label="Topic" v-model="title" />
         <Editor v-model="content" />
