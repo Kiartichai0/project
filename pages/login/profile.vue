@@ -39,7 +39,7 @@
                         <v-card-text >
                             <v-col v-for="i in subject" :key="i.id">
                                 <p v-if=" i.score.some((score) => score.user.id == id)" > {{i.title}}: {{i.score[i.score.findIndex((score) => score.user.id == id)].score}} คะแนน</p>
-                                <p v-else > {{i.title}}: 0 </p>
+                                <p v-else > {{i.title}}: 0 คะแนน</p>
                             </v-col>
                         </v-card-text>
                     </v-card> 

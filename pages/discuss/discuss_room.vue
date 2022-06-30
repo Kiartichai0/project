@@ -8,7 +8,7 @@
         <v-card-title> 
           {{ dis[0].title}} 
               <v-spacer></v-spacer>
-              <v-menu v-if="this.$auth.loggedIn && user.id == dis[0].user.id" :offset-y="true">
+              <v-menu v-if="this.$auth.loggedIn && user.data.user.id == dis[0].user.id" :offset-y="true">
                 <template v-slot:activator="{ on }">
                   <v-btn icon v-on="on">
                     <v-icon>mdi-dots-vertical</v-icon>

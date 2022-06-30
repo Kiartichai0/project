@@ -20,10 +20,10 @@
       <v-card-title >คุณได้คะแนน : {{ score }} / {{ quiz.length }} คะแนน </v-card-title>
       <v-row class="ml-5" v-for="i in quiz.length" :key="i">
         <v-divider class="mx-4"></v-divider>
-        <v-card-text><h1> <br/><br/> question: {{i}}  </h1></v-card-text>
+        <v-card-text><h3> <br/><br/> คำถามที่: {{i}}  </h3></v-card-text>
         <v-card-text> <div v-html="quiz[i - 1].question " /></v-card-text>
-        <v-card-text>Correct answer: {{ quiz[i - 1].correct }}</v-card-text>
-        <v-card-text>Your answer: {{ selection[i - 1] }} </v-card-text>
+        <v-card-text>คำตอบที่ถูกต้อง: {{ quiz[i - 1].correct }}</v-card-text>
+        <v-card-text>คำตอบของคุณ: {{ selection[i - 1] }} </v-card-text>
       </v-row>
       <v-btn
         class="ma-5"

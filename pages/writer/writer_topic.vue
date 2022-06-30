@@ -3,7 +3,7 @@
     <v-row class=" justify-center">
       <v-btn class="ma-auto my-2"  width="30%" to="/writer/writer_main"> กลับ </v-btn>
       <v-btn class="ma-auto my-2" width="30%" :to="{ path: '/writer/add_topic', query: { id: id }}" > เพิ่มหัวข้อ </v-btn>
-      <v-btn class="ma-auto my-2" width="30%" :to="{ path: '/writer/writer_quiz', query: { id: id }}"> แบบทดสอบ </v-btn>
+      <v-btn class="ma-auto my-2" width="30%" :to="{ path: '/writer/writer_quiz', query: { id: id }}"> ข้อสอบ </v-btn>
     </v-row>
     <v-row>
       <v-expansion-panels>
