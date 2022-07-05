@@ -184,10 +184,14 @@ export default {
             if(this.password == this.pass){
                 await this.$axios.$post("/users/password", payload);
                 await this.$nuxt.refresh();
+                this.password = '';
+                this.new_password = '';
 
 
             }else{
                 alert('รหัสผ่านผิด');
+                this.password = '';
+                this.new_password = '';
 
             }
 

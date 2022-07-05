@@ -2,7 +2,7 @@
   <div align="center">
     <v-col v-for="x in quiz.length" :key="x">
         <v-card width="50%">
-          <v-card-text><div class="my-5" v-html="quiz[x - 1].question" /> <br/> <h4> correct answer: {{quiz[x - 1].correct}}</h4> </v-card-text>
+          <v-card-text><div class="my-5" v-html="quiz[x - 1].question" /> <br/> <h4> เฉลย: {{quiz[x - 1].correct}}</h4> </v-card-text>
           
           <v-card-actions>
             <v-row>
