@@ -40,7 +40,7 @@
           </v-col>
 
           <v-col cols="12" >
-            <v-select v-model="form.role" :items="roles" :rules="rules.role" label="Role" required ></v-select>
+            <v-select v-model="form.role" :items="roles" :rules="rules.role" label="บทบาท" required ></v-select>
           </v-col>
           
           <v-col cols="12">
@@ -79,12 +79,12 @@
 
     <v-dialog v-model="conditions" width="70%" >
       <v-card>
-        <v-card-title class="text-h6"> Conditions </v-card-title>
+        <v-card-title class="text-h6"> เงื่อนไข </v-card-title>
         <v-card-text v-for="n in 5" :key="n" > {{ content }}
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="conditions = false" >  Ok  </v-btn>
+          <v-btn text @click="conditions = false" >  ตกลง  </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
