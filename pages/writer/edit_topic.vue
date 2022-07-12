@@ -25,7 +25,6 @@ export default {
       id: this.$route.query.id,
       loggedIn: this.$auth.loggedIn,
       content:this.$route.query.data.content,
-      description:this.$route.query.data.description,
       title:this.$route.query.data.title,
       topid:this.$route.query.data.topid
     };

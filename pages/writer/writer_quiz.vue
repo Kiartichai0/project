@@ -38,9 +38,6 @@ export default {
       loggedIn: this.$auth.loggedIn,
       id: this.$route.query.id,
       score: 0,
-      selection: [],
-
-      //entries: Object.entries(quiz),
     };
   },
   methods: {

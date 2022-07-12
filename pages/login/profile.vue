@@ -35,7 +35,7 @@
             <v-row>
                 <v-col cols="6">
                     <v-card flat>
-                        <v-card-title> คะแนนแบบทดสอบ </v-card-title>
+                        <v-card-title> คะแนนสอบ </v-card-title>
                         <v-card-text >
                             <v-col v-for="i in subject" :key="i.id">
                                 <p v-if=" i.score.some((score) => score.user.id == id)" > {{i.title}}: {{i.score[i.score.findIndex((score) => score.user.id == id)].score}} คะแนน</p>

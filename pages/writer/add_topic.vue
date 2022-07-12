@@ -19,7 +19,6 @@ export default {
     return {
       id: this.$route.query.id,
       title: "",
-      description: "",
       content: "",
     };
   },

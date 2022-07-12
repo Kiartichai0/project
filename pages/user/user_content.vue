@@ -7,9 +7,9 @@
             
             <v-card-actions class=" justify-center ">
                 <v-btn class="ma-auto " width="25%" :to="{ path: '/user/user_topic', query: { id:id} }"> กลับไปหน้าแรก  </v-btn>
-                <v-btn v-if = "this.current > 0" width="25%" class="ma-auto " @click="scrollBack()" > กลับ  </v-btn>
+                <v-btn v-if = "this.current > 0" width="25%" class="ma-auto " @click="Back()" > กลับ  </v-btn>
                 <v-btn v-else width="25%" class="ma-auto " :to="{ path: '/user/user_topic', query: { id:id} }"> กลับ </v-btn>
-                <v-btn v-if=" this.current < sub[0].chapters.length-1" width="40%" class="ma-auto " @click="scroll()" > ต่อไป </v-btn>
+                <v-btn v-if=" this.current < sub[0].chapters.length-1" width="40%" class="ma-auto " @click="nextPage()" > ต่อไป </v-btn>
             </v-card-actions>
         </v-card>
 
@@ -32,11 +32,11 @@ export default {
         };
     },
     methods:{
-        async scroll(){
+        async nextPage(){
             await this.current++ ;
             await window.scrollTo(0,0);
         },
-        async scrollBack(){
+        async Back(){
             await this.current-- ;
             await window.scrollTo(0,0);
         },
