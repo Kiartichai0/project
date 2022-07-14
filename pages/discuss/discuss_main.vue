@@ -42,12 +42,6 @@ export default {
             head: [{ text: "หัวข้อ", value: "title" }],
         };
     },
-    methods: {
-        async logout() {
-            await this.$auth.logout();
-            await this.$nuxt.refresh();
-        },
-    },
     components: { Profile }
 };
 </script>

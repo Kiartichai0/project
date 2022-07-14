@@ -43,9 +43,6 @@
     };
   },
     methods:{
-      async click(){
-        await alert('You just clicked');
-      },
       async logout() {
         await this.$auth.logout();
       },
